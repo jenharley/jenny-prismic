@@ -1,6 +1,6 @@
 const Info = (props) => {
     const {info} = props;
-    const name = info.properties.name;
+    const { name, description } = info.properties;
   
     return (
       <div>
@@ -13,6 +13,7 @@ const Info = (props) => {
             Wikipedia
           </a>
         </div>
+        <p style={{ width: 240 }}>{description}</p>
         <img width={240} src={info.properties.image.url} alt="" />
       </div>
     );

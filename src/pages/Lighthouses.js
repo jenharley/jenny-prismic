@@ -55,6 +55,7 @@ const Lighthouses = () => {
       const latitude = lighthouse.data.location.latitude;
       const longitude = lighthouse.data.location.longitude;
       const name = RichText.asText(lighthouse.data.name);
+      const description = RichText.asText(lighthouse.data.description);
       features.push(
         {
           "type": "Feature",
@@ -64,7 +65,8 @@ const Lighthouses = () => {
           },
           "properties": {
             "name": name,
-            "image": lighthouse.data.image
+            "image": lighthouse.data.image,
+            "description": description
           }
         }
       )
