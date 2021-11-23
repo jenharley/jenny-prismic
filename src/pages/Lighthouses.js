@@ -4,7 +4,7 @@ import Prismic from '@prismicio/client';
 import { DefaultLayout } from '../components';
 import NotFound from './NotFound';
 import { client } from '../utils/prismicHelpers';
-import { RichText } from 'prismic-reactjs';
+// import { RichText } from 'prismic-reactjs';
 import ReactMapGl, {Marker} from 'react-map-gl'
 
 const mapboxToken =
@@ -14,8 +14,6 @@ const Lighthouses = () => {
   const [prismicData, setPrismicData] = useState({ lighthouses: null });
   const [notFound, toggleNotFound] = useState(false);
   const [viewport, setViewport] = useState({
-    width: 400,
-    height: 400,
     latitude: 37.7577,
     longitude: -122.4376,
     zoom: 8
@@ -49,13 +47,13 @@ const Lighthouses = () => {
   if (prismicData.lighthouses) {
     return (
       <DefaultLayout seoTitle="Lighthouse Project">
-        <ReactMapGl mapboxApiAccessToken={mapboxToken} mapStyle="mapbox://styles/mapbox/streets-v11">
+        <ReactMapGl mapboxApiAccessToken={mapboxToken} mapStyle="mapbox://styles/mapbox/streets-v11" {...viewport} width="100vw" height="100vh" onViewportChange={setViewport}>
           {prismicData.lighthouses.map(lighthouse => {
             console.log(lighthouse)
             const latitude = lighthouse.data.location.latitude;
             const longitude = lighthouse.data.location.longitude;
             return (
-              <Marker latitude={latitude} longitude={longitude} key={lighthouse.id} onViewportChange={nextViewport => setViewport(nextViewport)} {...viewport}>{RichText.asText(lighthouse.data.name)}</Marker> 
+              <Marker latitude={latitude} longitude={longitude} key={lighthouse.id}><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-icon-2x.png" style={{ marginLeft: -12, marginTop: -41, width: 25, opacity: 1, }} alt="ka" /></Marker> 
             )
           })}
         </ReactMapGl>
