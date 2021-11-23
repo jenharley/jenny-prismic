@@ -49,7 +49,6 @@ const Lighthouses = () => {
       <DefaultLayout seoTitle="Lighthouse Project">
         <ReactMapGl mapboxApiAccessToken={mapboxToken} mapStyle="mapbox://styles/mapbox/streets-v11" {...viewport} width="100vw" height="100vh" onViewportChange={setViewport}>
           {prismicData.lighthouses.map(lighthouse => {
-            console.log(lighthouse)
             const latitude = lighthouse.data.location.latitude;
             const longitude = lighthouse.data.location.longitude;
             return (

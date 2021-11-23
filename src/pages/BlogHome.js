@@ -10,7 +10,6 @@ import { linkResolver } from '../prismic-configuration';
 
 const PosterThumbnail = props => {
   const { thumb } = props;
-  console.log(thumb);
 
   return (
     <img src={thumb.url} alt={thumb.alt} />
@@ -39,7 +38,6 @@ const PosterItem = (props) => {
 const PostItem = (props) => {
   const { post } = props;
   const title = RichText.asText(post.data?.title);
-  console.log(post)
 
   return (
     <Link to={linkResolver(post)}>

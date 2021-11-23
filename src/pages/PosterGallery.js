@@ -10,7 +10,6 @@ import { linkResolver } from '../prismic-configuration';
 
 const PosterThumbnail = props => {
   const { thumb } = props;
-  console.log(thumb);
 
   return (
     <img src={thumb.url} alt={thumb.alt} />
