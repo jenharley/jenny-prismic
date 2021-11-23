@@ -1,5 +1,8 @@
 export { default as BlogHome } from './BlogHome'
+export { default as Home } from './Home'
+export { default as Lighthouses } from './Lighthouses'
 export { default as NotFound } from './NotFound'
 export { default as Post } from './Post'
 export { default as Poster } from './Poster'
+export { default as PosterGallery } from './PosterGallery'
 export { default as Preview } from './Preview'

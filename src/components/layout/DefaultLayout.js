@@ -1,4 +1,5 @@
 import React from 'react';
+import Header from './Header';
 import Footer from './Footer';
 
 /**
@@ -6,6 +7,7 @@ import Footer from './Footer';
  */
 const DefaultLayout = ({ wrapperClass, title, children }) => (
   <div className={wrapperClass}>
+    <Header />
     {children}
     <Footer />
   </div>
