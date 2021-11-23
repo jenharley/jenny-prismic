@@ -6,9 +6,13 @@ import NotFound from './NotFound';
 import { client } from '../utils/prismicHelpers';
 // import { RichText } from 'prismic-reactjs';
 import ReactMapGl, {Marker} from 'react-map-gl'
+import mapboxgl from 'mapbox-gl';
 
 const mapboxToken =
   'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
+
+// eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
+mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
 
 const Lighthouses = () => {
   const [prismicData, setPrismicData] = useState({ lighthouses: null });
