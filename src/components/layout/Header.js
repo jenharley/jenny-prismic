@@ -136,7 +136,7 @@ const Header = () => {
                         <StyledLink to="/"><span>Home</span></StyledLink>
                     </li>
                     <li>
-                        <StyledLink to="/posters"><span>Poster</span></StyledLink>
+                        <StyledLink to="/posters"><span>Posters</span></StyledLink>
                     </li>
                     <li>
                         <StyledLink to="/lighthouses"><span>Lighthouse Project</span></StyledLink>
