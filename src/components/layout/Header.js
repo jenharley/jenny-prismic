@@ -2,33 +2,8 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { NavLink } from 'react-router-dom';
-import { flatten, zip } from 'lodash';
 import Hamburger from '../Hamburger';
-
-export const BREAKPOINTS = {
-    mobile: 480,
-    mobileVertical: 760,
-    tablet: 860,
-    laptop: 1154,
-    desktop: 1472,
-    widescreen: 2000,
-};
-
-export const respondTo = ( key, direction, dimension) => {
-    return (style, ...variables) =>
-        `@media (${direction ? direction : 'min'}-${dimension ? dimension : 'width'
-        }: ${BREAKPOINTS[key]}px) { ${flatten(zip(style, variables)).join('')} }`;
-};
-
-const StyledHeader = styled.header`
-    display: grid;
-    padding: 1rem;
-    width: 100%;
-
-    ${respondTo('tablet')`
-        padding: 0 2rem;
-    `}
-`;
+import { isMobileWidth, respondTo } from '../../utils/StyleUtil';
 
 const Nav = styled.nav`
     ${respondTo('tablet')`
@@ -62,12 +37,13 @@ const NavList = styled.ul`
         z-index: 1;
     `}
 `;
+const StyledHeader = styled.header`
+    display: grid;
+    padding: 1rem;
+    width: 100%;
 
-const NavListItem = styled.li``;
-
-const Toggle = styled.div`
     ${respondTo('tablet')`
-        display: none;
+        padding: 0 2rem;
     `}
 `;
 
@@ -111,9 +87,11 @@ const StyledLink = styled(NavLink)`
     }
 `;
 
-export function isMobileWidth(windowWidth) {
-    return windowWidth < 860;
-}
+const Toggle = styled.div`
+    ${respondTo('tablet')`
+        display: none;
+    `}
+`;
 
 const Header = () => {
     useEffect(() => {
@@ -154,48 +132,31 @@ const Header = () => {
             <Nav>
                 <Toggle onClick={toggleNavOpen} isNavOpen={isNavOpen} aria-expanded={isNavOpen}><Hamburger isNavOpen={isNavOpen} /></Toggle>
                 <NavList isNavOpen={isNavOpen}>
-                    <NavListItem>
-                        <StyledLink to="/" text="Home">
-                            <span>Home</span>
-                        </StyledLink>
-                    </NavListItem>
-                    {/* <NavListItem>
-                        Work
-                        <NavList>
-                            <NavListItem>
-                                <NavLink to="/posters">
-                                    Posters
-                                </NavLink>
-                            </NavListItem>
-                            <NavListItem>
-                                <NavLink to="/lighthouses">
-                                    Lighthouse Project
-                                </NavLink>
-                            </NavListItem>
-                        </NavList>
-                    </NavListItem> */}
-                    <NavListItem>
+                    <li>
+                        <StyledLink to="/"><span>Home</span></StyledLink>
+                    </li>
+                    <li>
                         <StyledLink to="/posters"><span>Poster</span></StyledLink>
-                    </NavListItem>
-                    <NavListItem>
+                    </li>
+                    <li>
                         <StyledLink to="/lighthouses"><span>Lighthouse Project</span></StyledLink>
-                    </NavListItem>
-                    <NavListItem>
+                    </li>
+                    <li>
                         <StyledLink to="/blog"><span>Blog</span></StyledLink>
-                    </NavListItem>
-                    <NavListItem>
+                    </li>
+                    <li>
                         <StyledLink to="/shop"><span>Shop</span></StyledLink>
-                    </NavListItem>
-                    <NavListItem>
+                    </li>
+                    <li>
                         <StyledLink to="/about"><span>About</span></StyledLink>
-                    </NavListItem>
-                    <NavListItem>
+                    </li>
+                    <li>
                         <StyledLink to="/contact"><span>Contact</span></StyledLink>
-                    </NavListItem>
+                    </li>
                 </NavList>
             </Nav>
         </StyledHeader>
-    )
-}
+    );
+};
 
 export default Header;
