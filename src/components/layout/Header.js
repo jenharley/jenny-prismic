@@ -4,11 +4,18 @@ import styled, { css } from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import Hamburger from '../Hamburger';
 import { isMobileWidth, respondTo } from '../../utils/StyleUtil';
+import MaxWidthContainer from '../MaxWidthContainer';
+
+const HeaderContainer = styled(MaxWidthContainer)`
+    ${respondTo('tablet')`
+        display: flex;
+        justify-content: flex-end;
+    `}
+`;
 
 const Nav = styled.nav`
     ${respondTo('tablet')`
         display: flex;
-        margin-left: auto;
     `}
 `;
 
@@ -39,7 +46,6 @@ const NavList = styled.ul`
 `;
 const StyledHeader = styled.header`
     display: grid;
-    padding: 1rem;
     width: 100%;
 
     ${respondTo('tablet')`
@@ -59,6 +65,7 @@ const StyledLink = styled(NavLink)`
 
     ${respondTo('tablet')`
         text-align: left;
+        padding: 3rem 0 3rem 2rem;
     `}
 
     &.active span::before {
@@ -129,32 +136,34 @@ const Header = () => {
 
     return (
         <StyledHeader>
-            <Nav>
-                <Toggle onClick={toggleNavOpen} isNavOpen={isNavOpen} aria-expanded={isNavOpen}><Hamburger isNavOpen={isNavOpen} /></Toggle>
-                <NavList isNavOpen={isNavOpen}>
-                    <li>
-                        <StyledLink to="/"><span>Home</span></StyledLink>
-                    </li>
-                    <li>
-                        <StyledLink to="/posters"><span>Posters</span></StyledLink>
-                    </li>
-                    <li>
-                        <StyledLink to="/lighthouses"><span>Lighthouse Project</span></StyledLink>
-                    </li>
-                    <li>
-                        <StyledLink to="/blog"><span>Blog</span></StyledLink>
-                    </li>
-                    <li>
-                        <StyledLink to="/shop"><span>Shop</span></StyledLink>
-                    </li>
-                    <li>
-                        <StyledLink to="/about"><span>About</span></StyledLink>
-                    </li>
-                    <li>
-                        <StyledLink to="/contact"><span>Contact</span></StyledLink>
-                    </li>
-                </NavList>
-            </Nav>
+            <HeaderContainer>
+                <Nav>
+                    <Toggle onClick={toggleNavOpen} isNavOpen={isNavOpen} aria-expanded={isNavOpen}><Hamburger isNavOpen={isNavOpen} /></Toggle>
+                    <NavList isNavOpen={isNavOpen}>
+                        <li>
+                            <StyledLink to="/"><span>Home</span></StyledLink>
+                        </li>
+                        <li>
+                            <StyledLink to="/posters"><span>Posters</span></StyledLink>
+                        </li>
+                        <li>
+                            <StyledLink to="/lighthouses"><span>Lighthouse Project</span></StyledLink>
+                        </li>
+                        <li>
+                            <StyledLink to="/blog"><span>Blog</span></StyledLink>
+                        </li>
+                        <li>
+                            <StyledLink to="/shop"><span>Shop</span></StyledLink>
+                        </li>
+                        <li>
+                            <StyledLink to="/about"><span>About</span></StyledLink>
+                        </li>
+                        <li>
+                            <StyledLink to="/contact"><span>Contact</span></StyledLink>
+                        </li>
+                    </NavList>
+                </Nav>
+            </HeaderContainer>
         </StyledHeader>
     );
 };

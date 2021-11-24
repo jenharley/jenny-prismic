@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { RichText } from 'prismic-reactjs';
 
-import { DefaultLayout, BackButton, SliceZone } from '../components';
+import { DefaultLayout, SliceZone } from '../components';
 import NotFound from './NotFound';
 import { client } from '../utils/prismicHelpers';
 import { useParams } from "react-router-dom";
+import MaxWidthContainer from '../components/MaxWidthContainer';
+import { Typography } from '../components/Typography';
 
 /**
  * Blog post page component
@@ -44,12 +46,11 @@ const Post = () => {
       'Untitled';
 
     return (
-      <DefaultLayout wrapperClass="main" seoTitle={title}>
-        <div className="outer-container">
-          <BackButton />
-          <h1>{title}</h1>
-        </div>
-        <SliceZone sliceZone={prismicDoc.data.body} />
+      <DefaultLayout seoTitle={title}>
+        <MaxWidthContainer>
+          <Typography variant="h1" as="h1">{title}</Typography>
+          <SliceZone sliceZone={prismicDoc.data.body} />
+        </MaxWidthContainer>
       </DefaultLayout>
     );
   } else if (notFound) {

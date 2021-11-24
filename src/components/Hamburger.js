@@ -10,7 +10,7 @@ const Button = styled.button`
     display: inline-grid;
     margin: 0;
     outline: 0;
-    padding: 1rem 0 1rem 1rem;
+    padding: 2rem 0;
     text-transform: none;
     transition-duration: 0.15s;
     transition-property: opacity, filter;
