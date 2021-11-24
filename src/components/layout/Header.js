@@ -22,8 +22,12 @@ export const respondTo = ( key, direction, dimension) => {
 
 const StyledHeader = styled.header`
     display: grid;
-    padding: 0 2rem;
+    padding: 1rem;
     width: 100%;
+
+    ${respondTo('tablet')`
+        padding: 0 2rem;
+    `}
 `;
 
 const Nav = styled.nav`
@@ -46,7 +50,16 @@ const NavList = styled.ul`
     `}
 
     ${props => props.isNavOpen && css`
+        background: #fff;
         display: grid;
+        grid-auto-rows: min-content;
+        left: 0;
+        min-height: calc(100vh - 56px);
+        overflow-y: auto;
+        position: absolute;
+        right: 0;
+        top: 56px;
+        z-index: 1;
     `}
 `;
 
@@ -78,6 +91,7 @@ const StyledLink = styled(NavLink)`
 
     span {
         position: relative;
+        z-index: 2;
 
         &::before {
             background-color: #ff2c54;
