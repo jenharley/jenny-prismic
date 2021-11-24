@@ -1,64 +1,113 @@
 import React from 'react';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+
+const StyledHeader = styled.header`
+    display: flex;
+    padding: 0 2rem;
+    width: 100%;
+`;
+
+const Nav = styled.nav`
+    display: flex;
+    margin-left: auto;
+`;
+
+const NavList = styled.ul`
+    display: flex;
+    column-gap: 1rem;
+`;
+
+const NavListItem = styled.li``;
+
+const NavLink = styled(Link)`
+    color: #41294a;
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 700;
+    padding: 2rem 0 2rem 1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+
+    span {
+        position: relative;
+
+        &::before {
+            background-color: #ff2c54;
+            bottom: -3px;
+            content: '';
+            height: 0;
+            left: -3px;
+            position: absolute;
+            transition: all .25s ease;
+            width: calc(100% + 6px);
+            z-index: -1;
+        }
+
+        &:hover::before {
+            height: 10px;
+        }
+    }
+`;
 
 const Header = () => {
     return (
-        <header>
-            <nav>
-                <ul>
-                    <li>
-                        <Link to="/">
-                            Home
-                        </Link>
-                    </li>
-                    {/* <li>
+        <StyledHeader>
+            <Nav>
+                <NavList>
+                    <NavListItem>
+                        <NavLink to="/">
+                            <span>Home</span>
+                        </NavLink>
+                    </NavListItem>
+                    {/* <NavListItem>
                         Work
-                        <ul>
-                            <li>
-                                <Link to="/posters">
+                        <NavList>
+                            <NavListItem>
+                                <NavLink to="/posters">
                                     Posters
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="/lighthouses">
+                                </NavLink>
+                            </NavListItem>
+                            <NavListItem>
+                                <NavLink to="/lighthouses">
                                     Lighthouse Project
-                                </Link>
-                            </li>
-                        </ul>
-                    </li> */}
-                    <li>
-                        <Link to="/posters">
-                            Posters
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="/lighthouses">
-                            Lighthouse Project
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="/blog">
-                            Blog
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="/shop">
-                            Shop
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="/about">
-                            About
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="/contact">
-                            Contact
-                        </Link>
-                    </li>
-                </ul>
-            </nav>
-        </header>
+                                </NavLink>
+                            </NavListItem>
+                        </NavList>
+                    </NavListItem> */}
+                    <NavListItem>
+                        <NavLink to="/posters">
+                            <span>Posters</span>
+                        </NavLink>
+                    </NavListItem>
+                    <NavListItem>
+                        <NavLink to="/lighthouses">
+                            <span>Lighthouse Project</span>
+                        </NavLink>
+                    </NavListItem>
+                    <NavListItem>
+                        <NavLink to="/blog">
+                            <span>Blog</span>
+                        </NavLink>
+                    </NavListItem>
+                    <NavListItem>
+                        <NavLink to="/shop">
+                            <span>Shop</span>
+                        </NavLink>
+                    </NavListItem>
+                    <NavListItem>
+                        <NavLink to="/about">
+                            <span>About</span>
+                        </NavLink>
+                    </NavListItem>
+                    <NavListItem>
+                        <NavLink to="/contact">
+                            <span>Contact</span>
+                        </NavLink>
+                    </NavListItem>
+                </NavList>
+            </Nav>
+        </StyledHeader>
     )
 }
 
