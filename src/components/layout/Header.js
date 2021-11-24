@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const StyledHeader = styled.header`
     display: flex;
@@ -20,7 +20,7 @@ const NavList = styled.ul`
 
 const NavListItem = styled.li``;
 
-const NavLink = styled(Link)`
+const StyledLink = styled(NavLink)`
     color: #41294a;
     display: block;
     font-size: 0.875rem;
@@ -28,6 +28,10 @@ const NavLink = styled(Link)`
     padding: 2rem 0 2rem 1rem;
     text-decoration: none;
     text-transform: uppercase;
+
+    &.active span::before {
+        height: 10px;
+    }
 
     span {
         position: relative;
@@ -56,9 +60,9 @@ const Header = () => {
             <Nav>
                 <NavList>
                     <NavListItem>
-                        <NavLink to="/">
+                        <StyledLink to="/" text="Home">
                             <span>Home</span>
-                        </NavLink>
+                        </StyledLink>
                     </NavListItem>
                     {/* <NavListItem>
                         Work
@@ -76,34 +80,22 @@ const Header = () => {
                         </NavList>
                     </NavListItem> */}
                     <NavListItem>
-                        <NavLink to="/posters">
-                            <span>Posters</span>
-                        </NavLink>
+                        <StyledLink to="/posters"><span>Poster</span></StyledLink>
                     </NavListItem>
                     <NavListItem>
-                        <NavLink to="/lighthouses">
-                            <span>Lighthouse Project</span>
-                        </NavLink>
+                        <StyledLink to="/lighthouses"><span>Lighthouse Project</span></StyledLink>
                     </NavListItem>
                     <NavListItem>
-                        <NavLink to="/blog">
-                            <span>Blog</span>
-                        </NavLink>
+                        <StyledLink to="/blog"><span>Blog</span></StyledLink>
                     </NavListItem>
                     <NavListItem>
-                        <NavLink to="/shop">
-                            <span>Shop</span>
-                        </NavLink>
+                        <StyledLink to="/shop"><span>Shop</span></StyledLink>
                     </NavListItem>
                     <NavListItem>
-                        <NavLink to="/about">
-                            <span>About</span>
-                        </NavLink>
+                        <StyledLink to="/about"><span>About</span></StyledLink>
                     </NavListItem>
                     <NavListItem>
-                        <NavLink to="/contact">
-                            <span>Contact</span>
-                        </NavLink>
+                        <StyledLink to="/contact"><span>Contact</span></StyledLink>
                     </NavListItem>
                 </NavList>
             </Nav>
