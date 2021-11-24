@@ -1,7 +1,6 @@
 import React from 'react';
 import { RichText } from 'prismic-reactjs';
 import { linkResolver } from '../../../prismic-configuration';
-import { customLink } from '../../../utils/prismicHelpers';
 import styled from 'styled-components';
 
 const StyledBlogBody = styled.div`
@@ -103,7 +102,6 @@ const BlogBody = ({ slice }) => {
         <RichText
             render={slice.primary.blog_post_body}
             linkResolver={linkResolver}
-            serializeHyperlink={customLink}
         />
         </StyledBlogBody>
     )
