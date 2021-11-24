@@ -12,7 +12,7 @@ const StyledBlogBody = styled.div`
         -o-font-feature-settings: 'dlig' 1, 'liga' 1, 'lnum' 1, 'kern' 1;
         color: #2E2E2E;
         line-height: 1.15em;
-        margin: 0 0 0.4em 0;
+        margin: 0 0 1em 0;
         font-family: "Open Sans", sans-serif;
     }
 
@@ -57,6 +57,7 @@ const StyledBlogBody = styled.div`
         -moz-font-feature-settings: 'liga' 1, 'onum' 1, 'kern' 1;
         -o-font-feature-settings: 'liga' 1, 'onum' 1, 'kern' 1;
         margin: 0 0 1.75em 0;
+        line-height: 1.8;
     }
 
     ol, ul {
