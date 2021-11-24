@@ -1,24 +1,62 @@
 import React from 'react';
-import styled from 'styled-components';
+import { useEffect, useState } from 'react';
+import styled, { css } from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import { flatten, zip } from 'lodash';
+import Hamburger from '../Hamburger';
+
+export const BREAKPOINTS = {
+    mobile: 480,
+    mobileVertical: 760,
+    tablet: 860,
+    laptop: 1154,
+    desktop: 1472,
+    widescreen: 2000,
+};
+
+export const respondTo = ( key, direction, dimension) => {
+    return (style, ...variables) =>
+        `@media (${direction ? direction : 'min'}-${dimension ? dimension : 'width'
+        }: ${BREAKPOINTS[key]}px) { ${flatten(zip(style, variables)).join('')} }`;
+};
 
 const StyledHeader = styled.header`
-    display: flex;
+    display: grid;
     padding: 0 2rem;
     width: 100%;
 `;
 
 const Nav = styled.nav`
-    display: flex;
-    margin-left: auto;
+    ${respondTo('tablet')`
+        display: flex;
+        margin-left: auto;
+    `}
 `;
 
 const NavList = styled.ul`
-    display: flex;
-    column-gap: 1rem;
+    display: none;
+    justify-content: center;
+    row-gap: 1rem;
+    padding-top: 1rem;
+
+    ${respondTo('tablet')`
+        display: flex;
+        column-gap: 1rem;
+        padding-top: 0;
+    `}
+
+    ${props => props.isNavOpen && css`
+        display: grid;
+    `}
 `;
 
 const NavListItem = styled.li``;
+
+const Toggle = styled.div`
+    ${respondTo('tablet')`
+        display: none;
+    `}
+`;
 
 const StyledLink = styled(NavLink)`
     color: #41294a;
@@ -26,8 +64,13 @@ const StyledLink = styled(NavLink)`
     font-size: 0.875rem;
     font-weight: 700;
     padding: 2rem 0 2rem 1rem;
+    text-align: center;
     text-decoration: none;
     text-transform: uppercase;
+
+    ${respondTo('tablet')`
+        text-align: left;
+    `}
 
     &.active span::before {
         height: 10px;
@@ -54,11 +97,49 @@ const StyledLink = styled(NavLink)`
     }
 `;
 
+export function isMobileWidth(windowWidth) {
+    return windowWidth < 860;
+}
+
 const Header = () => {
+    useEffect(() => {
+        window.addEventListener('resize', throttledHandleWindowResize);
+        return () => window.removeEventListener('resize', throttledHandleWindowResize);
+    });
+
+    const [isNavOpen, setIsNavOpen] = useState(false);
+
+    const toggleNavOpen = () => {
+        const isWidthMobile = isMobileWidth(document.documentElement.clientWidth);
+        if (isNavOpen && isWidthMobile) {
+            setIsNavOpen(false);
+            document.body.classList.remove('no-scroll');
+        } else if (!isNavOpen && isWidthMobile) {
+            setIsNavOpen(true);
+            document.body.classList.add('no-scroll');
+        } else if (isNavOpen && !isWidthMobile) {
+            setIsNavOpen(false);
+            document.body.classList.remove('no-scroll');
+        } else if (!isNavOpen && !isWidthMobile) {
+            document.body.classList.remove('no-scroll');
+        }
+    };
+
+    const throttledHandleWindowResize = () => {
+        const isWidthMobile = isMobileWidth(document.documentElement.clientWidth);
+        if (!isWidthMobile) {
+            setIsNavOpen(false);
+            document.body.classList.remove('no-scroll');
+        } else if (isWidthMobile && isNavOpen) {
+            document.body.classList.add('no-scroll');
+        }
+    };
+
     return (
         <StyledHeader>
             <Nav>
-                <NavList>
+                <Toggle onClick={toggleNavOpen} isNavOpen={isNavOpen} aria-expanded={isNavOpen}><Hamburger isNavOpen={isNavOpen} /></Toggle>
+                <NavList isNavOpen={isNavOpen}>
                     <NavListItem>
                         <StyledLink to="/" text="Home">
                             <span>Home</span>
