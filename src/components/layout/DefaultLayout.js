@@ -3,7 +3,7 @@ import Header from './Header';
 import Footer from './Footer';
 import { Helmet } from 'react-helmet';
 
-const DefaultLayout = ({ wrapperClass, seoTitle, children }) => (
+const DefaultLayout = ({ children, seoTitle, hideFooter, wrapperClass }) => (
     <>
         <Helmet>
             <title>{seoTitle}</title>
@@ -11,7 +11,7 @@ const DefaultLayout = ({ wrapperClass, seoTitle, children }) => (
         <div className={wrapperClass}>
             <Header />
             {children}
-            <Footer />
+            {!hideFooter && <Footer />}
         </div>
     </>
 );

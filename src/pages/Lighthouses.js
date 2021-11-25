@@ -4,7 +4,7 @@ import NotFound from './NotFound';
 import Pins from '../components/lighthouses/Pins';
 import Info from '../components/lighthouses/Info';
 import Prismic from '@prismicio/client';
-import ReactMapGl, { Popup } from 'react-map-gl';
+import ReactMapGl from 'react-map-gl';
 import mapboxgl from 'mapbox-gl';
 import { DefaultLayout } from '../components';
 import { RichText } from 'prismic-reactjs';
@@ -37,6 +37,17 @@ const Button = styled.div`
     }
 `;
 
+const Drawer = styled.div`
+    background: #fff;
+    height: calc(100vh - 110px);
+    overflow-y: auto;
+    padding: 2rem;
+    position: absolute;
+    right: 0;
+    top: 110px;
+    z-index: 3;
+`;
+
 const LighthouseGrid = styled.div`
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -56,7 +67,7 @@ const ViewOptions = styled.div`
     grid-template-columns: repeat(2, 1fr);
     position: absolute;
     top: 160px;
-    right: 30px;
+    left: 30px;
     z-index: 1;
 
     div {
@@ -72,7 +83,7 @@ const Lighthouses = () => {
         latitude: 44.912879,
         longitude: -84.7586996,
         width: '100vw',
-        height: '100vh',
+        height: 'calc(100vh - 110px)',
         zoom: 6
     });
 
@@ -128,27 +139,25 @@ const Lighthouses = () => {
     if (prismicData.lighthouses) {
         return (
             <>
-                <DefaultLayout seoTitle="Lighthouse Project">
+                <DefaultLayout seoTitle="Lighthouse Project" hideFooter={!showGrid}>
                     <ViewOptions>
                         <Button isActive={showGrid} onClick={() => setShowGrid(true)}>Grid</Button>
                         <Button isActive={!showGrid} onClick={() => setShowGrid(false)}>Map</Button>
                     </ViewOptions>
                     {!showGrid &&
-                        <ReactMapGl mapboxApiAccessToken={mapboxToken} mapStyle="mapbox://styles/mapbox/dark-v10" {...viewport} onViewportChange={setViewport}>
-                            <Pins data={prismicData.lighthouses} onClick={setPopupInfo} />
+                        <>
+                            <ReactMapGl scrollZoom={false} mapboxApiAccessToken={mapboxToken} mapStyle="mapbox://styles/mapbox/dark-v10" {...viewport} onViewportChange={setViewport}>
+                                <Pins data={prismicData.lighthouses} onClick={setPopupInfo} />
+                            </ReactMapGl>
                             {popupInfo && (
-                                <Popup
-                                tipSize={5}
-                                anchor="top"
-                                longitude={popupInfo.geometry.coordinates[0]}
-                                latitude={popupInfo.geometry.coordinates[1]}
-                                closeOnClick={false}
-                                onClose={setPopupInfo}
+                                <Drawer
+                                    onClose={setPopupInfo}
                                 >
-                                <Info info={popupInfo} />
-                                </Popup>
+                                    <div onClick={() => setPopupInfo(null)}>Close</div>
+                                    <Info info={popupInfo} />
+                                </Drawer>
                             )}
-                        </ReactMapGl>
+                        </>
                     }
                     {showGrid &&
                         <LighthouseGrid>
