@@ -1,20 +1,69 @@
-    import React, { useEffect, useState } from 'react';
-    import 'mapbox-gl/dist/mapbox-gl.css';
-    import NotFound from './NotFound';
-    import Pins from '../components/lighthouses/Pins';
-    import Info from '../components/lighthouses/Info';
-    import Prismic from '@prismicio/client';
-    import ReactMapGl, { Popup } from 'react-map-gl';
-    import mapboxgl from 'mapbox-gl';
-    import { DefaultLayout } from '../components';
-    import { RichText } from 'prismic-reactjs';
-    import { client } from '../utils/prismicHelpers';
+import React, { useEffect, useState } from 'react';
+import 'mapbox-gl/dist/mapbox-gl.css';
+import NotFound from './NotFound';
+import Pins from '../components/lighthouses/Pins';
+import Info from '../components/lighthouses/Info';
+import Prismic from '@prismicio/client';
+import ReactMapGl, { Popup } from 'react-map-gl';
+import mapboxgl from 'mapbox-gl';
+import { DefaultLayout } from '../components';
+import { RichText } from 'prismic-reactjs';
+import { client } from '../utils/prismicHelpers';
+import styled, { css } from 'styled-components';
 
-    // eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
-    mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
-    const mapboxToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
+// eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
+mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
+const mapboxToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
 
-    const Lighthouses = () => {
+const Button = styled.div`
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+
+    ${props => props.isActive && css`
+        background-color: #eee;
+        font-weight: 700;
+    `}
+
+    &:not(:last-child) {
+        border-right: 1px solid #111;
+    }
+
+    &:first-child {
+        border-radius: 4px 0 0 4px;
+    }
+
+    &:last-child {
+        border-radius: 0 4px 4px 0;
+    }
+`;
+
+const LighthouseGrid = styled.div`
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    padding-top: 100px;
+
+    li {
+        list-style: none;
+    }
+`;
+
+const ViewOptions = styled.div`
+    background: #fff;
+    border: 2px solid #111;
+    border-radius: 5px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    position: absolute;
+    top: 160px;
+    right: 30px;
+    z-index: 1;
+
+    div {
+    }
+`;
+
+const Lighthouses = () => {
     const [prismicData, setPrismicData] = useState({ lighthouses: null });
     const [notFound, toggleNotFound] = useState(false);
     const [popupInfo, setPopupInfo] = useState(null);
@@ -80,8 +129,10 @@
         return (
             <>
                 <DefaultLayout seoTitle="Lighthouse Project">
-                    <div onClick={() => setShowGrid(true)}>Grid</div>
-                    <div onClick={() => setShowGrid(false)}>Map</div>
+                    <ViewOptions>
+                        <Button isActive={showGrid} onClick={() => setShowGrid(true)}>Grid</Button>
+                        <Button isActive={!showGrid} onClick={() => setShowGrid(false)}>Map</Button>
+                    </ViewOptions>
                     {!showGrid &&
                         <ReactMapGl mapboxApiAccessToken={mapboxToken} mapStyle="mapbox://styles/mapbox/dark-v10" {...viewport} onViewportChange={setViewport}>
                             <Pins data={prismicData.lighthouses} onClick={setPopupInfo} />
@@ -100,20 +151,20 @@
                         </ReactMapGl>
                     }
                     {showGrid &&
-                        <div>
+                        <LighthouseGrid>
                             {prismicData.lighthouses.map(lighthouse => {
-                                const { properties } = lighthouse;
+                                const { geometry, properties } = lighthouse;
                                 const { name, image } = properties;
 
                                 return (
-                                    <li>
-                                        {name}
+                                    <li key={geometry.coordinates[0]}>
                                         <img src={image.url} alt={name} />
+                                        {name}
                                     </li>
                                 )
                             })}
 
-                        </div>
+                        </LighthouseGrid>
                     }
                 </DefaultLayout>
             </>
@@ -122,6 +173,6 @@
         return <NotFound />;
     }
     return null;
-    }
+}
 
-    export default Lighthouses;
+export default Lighthouses;
