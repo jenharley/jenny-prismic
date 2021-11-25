@@ -18,6 +18,7 @@
     const [prismicData, setPrismicData] = useState({ lighthouses: null });
     const [notFound, toggleNotFound] = useState(false);
     const [popupInfo, setPopupInfo] = useState(null);
+    const [showGrid, setShowGrid] = React.useState(false)
     const [viewport, setViewport] = useState({
         latitude: 44.912879,
         longitude: -84.7586996,
@@ -77,23 +78,45 @@
 
     if (prismicData.lighthouses) {
         return (
-        <DefaultLayout seoTitle="Lighthouse Project">
-            <ReactMapGl mapboxApiAccessToken={mapboxToken} mapStyle="mapbox://styles/mapbox/dark-v10" {...viewport} onViewportChange={setViewport}>
-            <Pins data={prismicData.lighthouses} onClick={setPopupInfo} />
-            {popupInfo && (
-                <Popup
-                tipSize={5}
-                anchor="top"
-                longitude={popupInfo.geometry.coordinates[0]}
-                latitude={popupInfo.geometry.coordinates[1]}
-                closeOnClick={false}
-                onClose={setPopupInfo}
-                >
-                <Info info={popupInfo} />
-                </Popup>
-            )}
-            </ReactMapGl>
-        </DefaultLayout>
+            <>
+                <DefaultLayout seoTitle="Lighthouse Project">
+                    <div onClick={() => setShowGrid(true)}>Grid</div>
+                    <div onClick={() => setShowGrid(false)}>Map</div>
+                    {!showGrid &&
+                        <ReactMapGl mapboxApiAccessToken={mapboxToken} mapStyle="mapbox://styles/mapbox/dark-v10" {...viewport} onViewportChange={setViewport}>
+                            <Pins data={prismicData.lighthouses} onClick={setPopupInfo} />
+                            {popupInfo && (
+                                <Popup
+                                tipSize={5}
+                                anchor="top"
+                                longitude={popupInfo.geometry.coordinates[0]}
+                                latitude={popupInfo.geometry.coordinates[1]}
+                                closeOnClick={false}
+                                onClose={setPopupInfo}
+                                >
+                                <Info info={popupInfo} />
+                                </Popup>
+                            )}
+                        </ReactMapGl>
+                    }
+                    {showGrid &&
+                        <div>
+                            {prismicData.lighthouses.map(lighthouse => {
+                                const { properties } = lighthouse;
+                                const { name, image } = properties;
+
+                                return (
+                                    <li>
+                                        {name}
+                                        <img src={image.url} alt={name} />
+                                    </li>
+                                )
+                            })}
+
+                        </div>
+                    }
+                </DefaultLayout>
+            </>
         );
     } else if (notFound) {
         return <NotFound />;
