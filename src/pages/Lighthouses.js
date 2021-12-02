@@ -45,7 +45,14 @@ const Drawer = styled.div`
     position: absolute;
     right: 0;
     top: 110px;
+    transform: translateX(389px);
+    transition: transform 300ms ease-in;
+    width: 389px;
     z-index: 3;
+
+    ${props => props.isOpen && css`
+        transform: translateX(0);
+    `}
 `;
 
 const LighthouseGrid = styled.div`
@@ -149,14 +156,13 @@ const Lighthouses = () => {
                             <ReactMapGl scrollZoom={false} mapboxApiAccessToken={mapboxToken} mapStyle="mapbox://styles/mapbox/dark-v10" {...viewport} onViewportChange={setViewport}>
                                 <Pins data={prismicData.lighthouses} onClick={setPopupInfo} />
                             </ReactMapGl>
-                            {popupInfo && (
-                                <Drawer
-                                    onClose={setPopupInfo}
-                                >
-                                    <div onClick={() => setPopupInfo(null)}>Close</div>
-                                    <Info info={popupInfo} />
-                                </Drawer>
-                            )}
+                            <Drawer
+                                isOpen={!!popupInfo}
+                                onClose={setPopupInfo}
+                            >
+                                <div onClick={() => setPopupInfo(null)}>Close</div>
+                                {popupInfo && <Info info={popupInfo} />}
+                            </Drawer>
                         </>
                     }
                     {showGrid &&
