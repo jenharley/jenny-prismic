@@ -9,7 +9,6 @@ import { linkResolver } from '../prismic-configuration';
 import styled from 'styled-components';
 import moment from 'moment';
 import Masonry from '@mui/lab/Masonry';
-import { Tab } from '@mui/material';
 
 const Date = styled.span`
     color: #ff2c54;
@@ -82,16 +81,6 @@ const truncate = (string, useLength) => {
     return string.length > length ? string.substring(0, length - 3) + `…` : string;
 };
 
-const intersperse = (array, separator) => {
-    if (array.length === 0) {
-        return [];
-    }
-
-    return array.slice(1).reduce(function(xs, x, i) {
-        return xs.concat([separator, x]);
-    }, [array[0]]);
-}
-
 const PostItem = (props) => {
     const { post } = props;
     const { data } = post;
@@ -102,7 +91,7 @@ const PostItem = (props) => {
 
     return (
         <Post to={linkResolver(post)}>
-            <img src="http://placekitten.com/1300/1418" />
+            <img src="http://placekitten.com/1300/1418" alt="Blog post" />
             <h2>{blog_title}</h2>
             <p>{truncate(description)}</p>
             <Dateline>
