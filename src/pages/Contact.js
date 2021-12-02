@@ -29,7 +29,7 @@ export const Contact = props => {
         <>
             <DefaultLayout seoTitle={"Contact"}>
                 Contact
-                <form>
+                <form netlify onSubmit={handleSubmit}>
                     <label>
                         Your Name: <input type="text" name="name" onChange={e => setName({name: e.target.value})} />
                     </label>
@@ -39,7 +39,7 @@ export const Contact = props => {
                     <label>
                         Message: <textarea name="message" onChange={e => setMessage({message: e.target.value})} />
                     </label>
-                    <button type="submit" onClick={handleSubmit}>Send</button>
+                    <button type="submit">Send</button>
                 </form>
             </DefaultLayout>
         </>
