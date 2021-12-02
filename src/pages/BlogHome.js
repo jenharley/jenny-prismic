@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { RichText } from 'prismic-reactjs';
 import { client } from '../utils/prismicHelpers';
 import { linkResolver } from '../prismic-configuration';
+import { isMobileWidth } from '../utils/StyleUtil';
 import styled from 'styled-components';
 import moment from 'moment';
 import Masonry from '@mui/lab/Masonry';
@@ -106,11 +107,23 @@ const PostItem = (props) => {
 };
 
 const BlogPosts = (props) => {
+    useEffect(() => {
+        window.addEventListener('resize', throttledHandleWindowResize);
+        return () => window.removeEventListener('resize', throttledHandleWindowResize);
+    });
+
+    const [columns, setColumns] = useState(isMobileWidth(document.documentElement.clientWidth) ? 1 : 3);
     const { posts } = props;
+
+    const throttledHandleWindowResize = () => {
+        const isWidthMobile = isMobileWidth(document.documentElement.clientWidth);
+        const columns = isWidthMobile ? 1 : 3;
+        setColumns(columns);
+    }
 
     return (
         <PostList>
-            <Masonry columns={3} spacing={5}>
+            <Masonry columns={columns} spacing={5}>
                 {posts.map((post) => (
                     <PostItem post={post} key={post.id} />
                 ))}
