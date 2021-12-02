@@ -1,49 +1,67 @@
 import React, { useState } from 'react';
 import { DefaultLayout } from '../components';
 
-export const Contact = props => {
-    const [email, setEmail] = useState("");
-    const [name, setName] = useState("");
-    const [message, setMessage] = useState("");
+const Contact = props => {
+    const [name,setName] = useState('');
+    const [status,setStatus] = useState('');
+    const [email,setEmail] = useState('');
+    const [message,setMessage] = useState('');
 
     const encode = (data) => {
-        return Object.keys(data)
-            .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
-            .join("&");
+        const formData = new FormData();
+
+        Object.keys(data).forEach((k)=>{
+            formData.append(k,data[k])
+        });
+
+        return formData;
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = e => {
+        const data = { "form-name": "contact", name, email, message }
+        
         fetch("/", {
             method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: encode({ "form-name": "contact", email, name, message })
+            body: encode(data)
         })
-        .then(() => console.log("Success!"))
-        .catch(error => console.warn(error));
+        .then(() => setStatus("Form Submission Successful!!"))
+        .catch(error => setStatus("Form Submission Failed!"));
 
-        event.preventDefault();
+        e.preventDefault();
     };
 
+    const handleChange = e => {
+        const {name, value} = e.target
+        if (name === 'name' ){
+            return setName(value)
+        }
+
+        if (name === 'email' ){
+            return setEmail(value)
+        }
+
+        if (name === 'message' ){
+            return setMessage(value)
+        }
+    }
 
     return (
-        <>
-            <DefaultLayout seoTitle={"Contact"}>
-                Contact
-                <form netlify onSubmit={handleSubmit}>
-                    <label>
-                        Your Name: <input type="text" name="name" onChange={e => setName({name: e.target.value})} />
-                    </label>
-                    <label>
-                        Your Email: <input type="email" name="email" onChange={e => setEmail({email: e.target.value})} />
-                    </label>
-                    <label>
-                        Message: <textarea name="message" onChange={e => setMessage({message: e.target.value})} />
-                    </label>
-                    <button type="submit">Send</button>
-                </form>
-            </DefaultLayout>
-        </>
-    )
+        <DefaultLayout>
+            <form onSubmit={handleSubmit} action="/thank-you">
+                <label>
+                    Your Name: <input type="text" name="name" value={name} onChange={handleChange} />
+                </label>
+                <label>
+                    Your Email: <input type="email" name="email" value={email} onChange={handleChange} />
+                </label>
+                <label>
+                    Message: <textarea name="message" value={message} onChange={handleChange} />
+                </label>
+                <button type="submit">Send</button>
+            </form>
+            <h3>{status}</h3>
+        </DefaultLayout>
+    );
 };
 
 export default Contact;
