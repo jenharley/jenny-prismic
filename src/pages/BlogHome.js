@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import Masonry from '@mui/lab/Masonry';
 import NotFound from './NotFound';
 import Prismic from '@prismicio/client';
+import React, { useEffect, useState } from 'react';
+import moment from 'moment';
+import styled from 'styled-components';
 import { DefaultLayout } from '../components';
 import { Link } from 'react-router-dom';
 import { RichText } from 'prismic-reactjs';
 import { client } from '../utils/prismicHelpers';
-import { linkResolver } from '../prismic-configuration';
 import { isMobileWidth } from '../utils/StyleUtil';
-import styled from 'styled-components';
-import moment from 'moment';
-import Masonry from '@mui/lab/Masonry';
+import { linkResolver } from '../prismic-configuration';
 
 const Date = styled.span`
     color: #ff2c54;
