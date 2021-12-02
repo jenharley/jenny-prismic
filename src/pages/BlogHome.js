@@ -84,14 +84,14 @@ const truncate = (string, useLength) => {
 const PostItem = (props) => {
     const { post } = props;
     const { data } = post;
-    const { body, publish_date, tags, title } = data;
+    const { body, publish_date, tags, thumbnail, title } = data;
     const blog_title = RichText.asText(title);
     const description = RichText.asText(body[0].primary.blog_post_body);
     const date = moment(publish_date).format("MMM D, YYYY")
 
     return (
         <Post to={linkResolver(post)}>
-            <img src="http://placekitten.com/1300/1418" alt="Blog post" />
+            {thumbnail.url && <img src={thumbnail.url} alt={title} />}
             <h2>{blog_title}</h2>
             <p>{truncate(description)}</p>
             <Dateline>
@@ -141,7 +141,7 @@ const BlogHome = () => {
             try {
                 const blog_posts = await client.query(
                     Prismic.Predicates.at('document.type', 'blog_post'),
-                        { orderings: '[my.post.date desc]' }
+                        { orderings: '[my.blog_post.publish_date desc]' }
                 );
 
                 if (blog_posts) {
