@@ -47,7 +47,7 @@ const Contact = props => {
 
     return (
         <DefaultLayout>
-            <form onSubmit={handleSubmit} action="/thank-you">
+            <form onSubmit={handleSubmit} action="/thank-you" data-netlify="true">
                 <input type="hidden" name="form-name" value="contact" />
                 <label>
                     Your Name: <input type="text" name="name" value={name} onChange={handleChange} />
