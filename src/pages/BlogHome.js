@@ -123,7 +123,13 @@ const BlogPosts = (props) => {
 
     return (
         <PostList>
-            <Masonry columns={columns} spacing={5}>
+            <Masonry
+                columns={columns}
+                spacing={5}
+                defaultHeight={516}
+                defaultColumns={3}
+                defaultSpacing={5}
+            >
                 {posts.map((post) => (
                     <PostItem post={post} key={post.id} />
                 ))}
