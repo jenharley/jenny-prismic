@@ -99,7 +99,7 @@ const Lighthouses = () => {
         try {
             const lighthouses = await client.query(
             Prismic.Predicates.at('document.type', 'lighthouse'),
-            { orderings: '[my.post.date desc]' }
+            { orderings: '[my.post.date desc]', pageSize: 100 }
             );
     
             if (lighthouses) {
