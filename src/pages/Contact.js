@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { DefaultLayout } from '../components';
 
 const Contact = props => {
-    const [name,setName] = useState('');
-    const [status,setStatus] = useState('');
-    const [email,setEmail] = useState('');
-    const [message,setMessage] = useState('');
+    const [name, setName] = useState('');
+    const [status, setStatus] = useState('');
+    const [email, setEmail] = useState('');
+    const [message, setMessage] = useState('');
 
     const encode = (data) => {
         const formData = new FormData();
@@ -18,14 +18,14 @@ const Contact = props => {
     }
 
     const handleSubmit = e => {
-        const data = { "form-name": "contact", name, email, message }
+        const data = { 'form-name': 'contact', name, email, message }
         
-        fetch("/", {
-            method: "POST",
+        fetch('/', {
+            method: 'POST',
             body: encode(data)
         })
-        .then(() => setStatus("Form Submission Successful!!"))
-        .catch(error => setStatus("Form Submission Failed!"));
+        .then(() => setStatus('Form Submission Successful!!'))
+        .catch(error => setStatus('Form Submission Failed!'));
 
         e.preventDefault();
     };
@@ -48,6 +48,7 @@ const Contact = props => {
     return (
         <DefaultLayout>
             <form onSubmit={handleSubmit} action="/thank-you">
+                <input type="hidden" name="form-name" value="contact" />
                 <label>
                     Your Name: <input type="text" name="name" value={name} onChange={handleChange} />
                 </label>
