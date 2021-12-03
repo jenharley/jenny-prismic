@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { respondTo } from '../utils/StyleUtil';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import NotFound from './NotFound';
 import Pins from '../components/lighthouses/Pins';
@@ -10,6 +11,8 @@ import { DefaultLayout } from '../components';
 import { RichText } from 'prismic-reactjs';
 import { client } from '../utils/prismicHelpers';
 import styled, { css } from 'styled-components';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 // eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
 mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
@@ -37,6 +40,12 @@ const Button = styled.div`
     }
 `;
 
+const Container = styled.div`
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+`;
+
 const Drawer = styled.div`
     background: #fff;
     height: calc(100vh - 110px);
@@ -44,14 +53,23 @@ const Drawer = styled.div`
     padding: 2rem;
     position: absolute;
     right: 0;
-    top: 110px;
+    top: 0;
     transform: translateX(389px);
     transition: transform 300ms ease-in;
     width: 389px;
     z-index: 3;
 
+    ${respondTo('desktop')`
+        transform: translateX(589px);
+        width: 589px;
+    `}
+
     ${props => props.isOpen && css`
         transform: translateX(0);
+
+        ${respondTo('desktop')`
+            transform: translateX(0);
+        `}
     `}
 `;
 
@@ -76,9 +94,6 @@ const ViewOptions = styled.div`
     top: 160px;
     left: 30px;
     z-index: 1;
-
-    div {
-    }
 `;
 
 const Lighthouses = () => {
@@ -87,53 +102,53 @@ const Lighthouses = () => {
     const [popupInfo, setPopupInfo] = useState(null);
     const [showGrid, setShowGrid] = React.useState(false)
     const [viewport, setViewport] = useState({
+        height: 'calc(100vh - 110px)',
         latitude: 44.912879,
         longitude: -84.7586996,
-        width: '100vw',
-        height: 'calc(100vh - 110px)',
+        width: "fit",
         zoom: 6
     });
 
     useEffect(() => {
         const fetchPrismicData = async () => {
-        try {
-            const lighthouses = await client.query(
-            Prismic.Predicates.at('document.type', 'lighthouse'),
-            { orderings: '[my.post.date desc]', pageSize: 100 }
-            );
-    
-            if (lighthouses) {
-                let features = [];
-                lighthouses.results.map(lighthouse => {
-                    const latitude = lighthouse.data.location.latitude;
-                    const longitude = lighthouse.data.location.longitude;
-                    const name = RichText.asText(lighthouse.data.name);
-                    const description = RichText.asText(lighthouse.data.description);
-                    const colors = ['#f0b8b8', '#aecdc2', '#665191', '#a05195', '#88c9d4', '#d45087', '#f95d6a', '#ff7c43', '#ffa600' ];
-                    const fill = colors[Math.floor(Math.random() * colors.length)];
+            try {
+                const lighthouses = await client.query(
+                Prismic.Predicates.at('document.type', 'lighthouse'),
+                    { orderings: '[my.post.date desc]', pageSize: 100 }
+                );
+        
+                if (lighthouses) {
+                    let features = [];
+                    lighthouses.results.map(lighthouse => {
+                        const latitude = lighthouse.data.location.latitude;
+                        const longitude = lighthouse.data.location.longitude;
+                        const name = RichText.asText(lighthouse.data.name);
+                        const description = RichText.asText(lighthouse.data.description);
+                        const colors = ['#f0b8b8', '#aecdc2', '#665191', '#a05195', '#88c9d4', '#d45087', '#f95d6a', '#ff7c43', '#ffa600' ];
+                        const fill = colors[Math.floor(Math.random() * colors.length)];
 
-                    features.push(
-                        {
-                            "type": "Feature",
-                            "geometry": {
-                            "type": "Point",
-                            "coordinates": [longitude, latitude]
-                            },
-                            "properties": {
-                                "name": name,
-                                "image": lighthouse.data.image,
-                                "description": description,
-                                "fill": fill
+                        features.push(
+                            {
+                                "type": "Feature",
+                                "geometry": {
+                                "type": "Point",
+                                "coordinates": [longitude, latitude]
+                                },
+                                "properties": {
+                                    "name": name,
+                                    "image": lighthouse.data.image,
+                                    "description": description,
+                                    "fill": fill
+                                }
                             }
-                        }
-                    )
-                    return features;
-                })
-                setPrismicData({ lighthouses: features });
-            } else {
-                console.warn('Blog Home document was not found. Make sure it exists in your Prismic repository');
-                toggleNotFound(true);
-                }
+                        )
+                        return features;
+                    })
+                    setPrismicData({ lighthouses: features });
+                } else {
+                    console.warn('Blog Home document was not found. Make sure it exists in your Prismic repository');
+                    toggleNotFound(true);
+                    }
             } catch (error) {
                 console.error(error);
                 toggleNotFound(true);
@@ -152,18 +167,20 @@ const Lighthouses = () => {
                         <Button isActive={!showGrid} onClick={() => setShowGrid(false)}>Map</Button>
                     </ViewOptions>
                     {!showGrid &&
-                        <>
-                            <ReactMapGl scrollZoom={false} mapboxApiAccessToken={mapboxToken} mapStyle="mapbox://styles/mapbox/dark-v10" {...viewport} onViewportChange={setViewport}>
+                        <Container>
+                            <ReactMapGl scrollZoom={false} mapboxApiAccessToken={mapboxToken} mapStyle="mapbox://styles/mapbox/dark-v10" {...viewport} onViewportChange={nextViewport => setViewport({ ...nextViewport, width: "fit" })}>
                                 <Pins data={prismicData.lighthouses} onClick={setPopupInfo} />
                             </ReactMapGl>
                             <Drawer
                                 isOpen={!!popupInfo}
                                 onClose={setPopupInfo}
                             >
-                                <div onClick={() => setPopupInfo(null)}>Close</div>
+                                <IconButton aria-label="Close" onClick={() => setPopupInfo(null)}>
+                                    <CloseIcon />
+                                </IconButton>
                                 {popupInfo && <Info info={popupInfo} />}
                             </Drawer>
-                        </>
+                        </Container>
                     }
                     {showGrid &&
                         <LighthouseGrid>
