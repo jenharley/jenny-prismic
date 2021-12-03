@@ -8,8 +8,22 @@ import { DefaultLayout } from '../components';
 import { Link } from 'react-router-dom';
 import { RichText } from 'prismic-reactjs';
 import { client } from '../utils/prismicHelpers';
-import { isMobileWidth } from '../utils/StyleUtil';
+import { isMobileWidth, respondTo } from '../utils/StyleUtil';
 import { linkResolver } from '../prismic-configuration';
+import MaxWidthContainer from '../components/MaxWidthContainer';
+
+const BlogTitle = styled.h1`
+    color: #41294a;
+    font-size: 4rem;
+    font-weight: 700;
+    letter-spacing: -.06em;
+    padding: 60px 0 120px;
+    text-align: center;
+
+    ${respondTo('desktop')`
+        font-size: 8rem;
+    `}
+`;
 
 const Date = styled.span`
     color: #ff2c54;
@@ -22,15 +36,12 @@ const Date = styled.span`
 
 const Dateline = styled.div`
     align-items: baseline;
-    display: flex;
+    column-gap: 0.5rem;
+    display: grid;
+    grid-template-columns: 80px minmax(0, 1fr) 76px;
     justify-content: space-between;
     margin-top: 1rem;
-
-    div {
-        align-items: baseline;
-        display: flex;
-        column-gap: 0.5rem;
-    }
+    width: 100%;
 `;
 
 const ReadMore = styled(Link)`
@@ -46,6 +57,12 @@ const ReadMore = styled(Link)`
 const Post = styled(Link)`
     color: #111;
     text-decoration: none;
+
+    ${respondTo('desktop', 'max')`
+        && {
+            margin-bottom: 60px;
+        }
+    `}
 
     h2 {
         font-size: 1.625rem;
@@ -64,15 +81,22 @@ const Post = styled(Link)`
 const PostList = styled.ul`
     display: grid;
     margin: 0 auto;
-    max-width: 1100px;
+    max-width: 1320px;
+    padding-left: 40px;
 `;
 
-const StyledTagList = styled.ul`
-    color: #bababa;
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
+const StyledTagList = styled.div`
+    span {
+        color: #bababa;
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 700;
+        overflow: hidden;
+        text-transform: uppercase;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 99%;
+    }
 `;
 
 const truncate = (string, useLength) => {
@@ -96,10 +120,8 @@ const PostItem = (props) => {
             <h2>{blog_title}</h2>
             <p>{truncate(description)}</p>
             <Dateline>
-                <div>
-                    <Date>{date}</Date>
-                    {tags && <TagList tags={tags} />}
-                </div>
+                <Date>{date}</Date>
+                {tags && <TagList tags={tags} />}
                 <ReadMore to={linkResolver(post)}>Read More</ReadMore> 
             </Dateline>
         </Post>
@@ -145,7 +167,7 @@ const TagList = (props) => {
 
     return (
         <StyledTagList>
-            {truncate(tagList, 20)}
+            <span>{truncate(tagList, 23)}</span>
         </StyledTagList>
     )
 };
@@ -184,7 +206,9 @@ const BlogHome = () => {
 
         return (
         <DefaultLayout seoTitle={"Blog"}>
-            Blog
+            <MaxWidthContainer>
+                <BlogTitle>Blog Posts</BlogTitle>
+            </MaxWidthContainer>
             <BlogPosts posts={blog_posts} />
         </DefaultLayout>
         );
