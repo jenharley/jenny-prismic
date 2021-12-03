@@ -101,9 +101,9 @@ const StyledTagList = styled.div`
 
 const truncate = (string, useLength) => {
     const LENGTH = 155;
-    const length = useLength ? useLength : LENGTH;
+    const length = useLength || LENGTH;
 
-    return string.length > length ? string.substring(0, length - 3) + `…` : string;
+    return string.length > length ? string.substring(0, length - 3) + '…' : string;
 };
 
 const PostItem = (props) => {
@@ -112,7 +112,7 @@ const PostItem = (props) => {
     const { body, publish_date, tags, thumbnail, title } = data;
     const blog_title = RichText.asText(title);
     const description = RichText.asText(body[0].primary.blog_post_body);
-    const date = moment(publish_date).format("MMM D, YYYY")
+    const date = moment(publish_date).format('MMM D, YYYY');
 
     return (
         <Post to={linkResolver(post)}>
@@ -122,7 +122,7 @@ const PostItem = (props) => {
             <Dateline>
                 <Date>{date}</Date>
                 {tags && <TagList tags={tags} />}
-                <ReadMore to={linkResolver(post)}>Read More</ReadMore> 
+                <ReadMore to={linkResolver(post)}>Read More</ReadMore>
             </Dateline>
         </Post>
     );
@@ -141,7 +141,7 @@ const BlogPosts = (props) => {
         const isWidthMobile = isMobileWidth(document.documentElement.clientWidth);
         const columns = isWidthMobile ? 1 : 3;
         setColumns(columns);
-    }
+    };
 
     return (
         <PostList>
@@ -163,13 +163,13 @@ const BlogPosts = (props) => {
 const TagList = (props) => {
     const { tags } = props;
     const array = tags.map(tag => tag.tag);
-    const tagList = array.join(", ").toString();
+    const tagList = array.join(', ').toString();
 
     return (
         <StyledTagList>
             <span>{truncate(tagList, 23)}</span>
         </StyledTagList>
-    )
+    );
 };
 
 const BlogHome = () => {
@@ -182,7 +182,7 @@ const BlogHome = () => {
             try {
                 const blog_posts = await client.query(
                     Prismic.Predicates.at('document.type', 'blog_post'),
-                        { orderings: '[my.blog_post.publish_date desc]' }
+                    { orderings: '[my.blog_post.publish_date desc]' }
                 );
 
                 if (blog_posts) {
@@ -195,7 +195,7 @@ const BlogHome = () => {
                 console.error(error);
                 toggleNotFound(true);
             }
-        }
+        };
 
         fetchPrismicData();
     }, []);
@@ -205,18 +205,18 @@ const BlogHome = () => {
         const blog_posts = prismicData.blog_posts;
 
         return (
-        <DefaultLayout seoTitle={"Blog"}>
-            <MaxWidthContainer>
-                <BlogTitle>Blog Posts</BlogTitle>
-            </MaxWidthContainer>
-            <BlogPosts posts={blog_posts} />
-        </DefaultLayout>
+            <DefaultLayout seoTitle={'Blog'}>
+                <MaxWidthContainer>
+                    <BlogTitle>Blog Posts</BlogTitle>
+                </MaxWidthContainer>
+                <BlogPosts posts={blog_posts} />
+            </DefaultLayout>
         );
     } else if (notFound) {
         return <NotFound />;
     }
 
     return null;
-}
+};
 
 export default BlogHome;

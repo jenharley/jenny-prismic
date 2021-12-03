@@ -21,40 +21,40 @@ const Contact = props => {
     const encode = (data) => {
         const formData = new FormData();
 
-        Object.keys(data).forEach((k)=>{
-            formData.append(k,data[k])
+        Object.keys(data).forEach((k) => {
+            formData.append(k, data[k]);
         });
 
         return formData;
-    }
+    };
 
     const handleSubmit = e => {
-        const data = { 'form-name': 'contact', name, email, message }
-        
+        const data = { 'form-name': 'contact', name, email, message };
+
         fetch('/', {
             method: 'POST',
             body: encode(data)
         })
-        .then(() => setStatus('Sent'))
-        .catch(error => setStatus('Error sending, please try again.'));
+            .then(() => setStatus('Sent'))
+            .catch(() => setStatus('Error sending, please try again.'));
 
         e.preventDefault();
     };
 
     const handleChange = e => {
-        const {name, value} = e.target
-        if (name === 'name' ){
-            return setName(value)
+        const { name, value } = e.target;
+        if (name === 'name') {
+            return setName(value);
         }
 
-        if (name === 'email' ){
-            return setEmail(value)
+        if (name === 'email') {
+            return setEmail(value);
         }
 
-        if (name === 'message' ){
-            return setMessage(value)
+        if (name === 'message') {
+            return setMessage(value);
         }
-    }
+    };
 
     return (
         <DefaultLayout>
@@ -83,7 +83,7 @@ const Contact = props => {
                     required
                     rows={4}
                 />
-                <Button 
+                <Button
                     disableElevation
                     endIcon={<SendIcon />}
                     size="large"

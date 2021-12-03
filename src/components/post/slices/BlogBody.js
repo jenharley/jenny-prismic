@@ -99,12 +99,12 @@ const StyledBlogBody = styled.div`
 const BlogBody = ({ slice }) => {
     return (
         <StyledBlogBody>
-        <RichText
-            render={slice.primary.blog_post_body}
-            linkResolver={linkResolver}
-        />
+            <RichText
+                render={slice.primary.blog_post_body}
+                linkResolver={linkResolver}
+            />
         </StyledBlogBody>
-    )
-    };
+    );
+};
 
 export default BlogBody;

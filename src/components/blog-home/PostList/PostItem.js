@@ -10,25 +10,25 @@ import { linkResolver } from '../../../prismic-configuration';
  * Post list item component
  */
 const PostItem = ({ post }) => {
-  const title =
-    RichText.asText(post.data.title) ?
-    RichText.asText(post.data.title) :
-    'Untitled';
-  
-  return (
-    <div className="blog-post">
-      <Link to={linkResolver(post)}>
-        <h2>{title}</h2>
-      </Link>
+    const title =
+    RichText.asText(post.data.title)
+        ? RichText.asText(post.data.title)
+        : 'Untitled';
 
-      <PostDate date={post.data.date} />
-      
-      <FirstParagraph
-        sliceZone={post.data.body}
-        textLimit={300}
-      />
-    </div>
-  );
+    return (
+        <div className="blog-post">
+            <Link to={linkResolver(post)}>
+                <h2>{title}</h2>
+            </Link>
+
+            <PostDate date={post.data.date} />
+
+            <FirstParagraph
+                sliceZone={post.data.body}
+                textLimit={300}
+            />
+        </div>
+    );
 };
 
 export default PostItem;

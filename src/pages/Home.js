@@ -9,11 +9,11 @@ import { Link } from 'react-router-dom';
 import { linkResolver } from '../prismic-configuration';
 
 const PosterThumbnail = props => {
-  const { thumb } = props;
+    const { thumb } = props;
 
-  return (
-    <img src={thumb.url} alt={thumb.alt} />
-  );
+    return (
+        <img src={thumb.url} alt={thumb.alt} />
+    );
 };
 
 const Thumbnail = styled.div`
@@ -21,106 +21,106 @@ const Thumbnail = styled.div`
 `;
 
 const PosterItem = (props) => {
-  const { poster } = props;
-  const title = RichText.asText(poster.data?.title);
-  const thumb = poster.data.thumb
+    const { poster } = props;
+    const title = RichText.asText(poster.data?.title);
+    const thumb = poster.data.thumb;
 
-  return (
-    <Link to={linkResolver(poster)}>
-      <Thumbnail>
-        {title}
-        <PosterThumbnail thumb={thumb} />
-      </Thumbnail>
-    </Link>
-  );
+    return (
+        <Link to={linkResolver(poster)}>
+            <Thumbnail>
+                {title}
+                <PosterThumbnail thumb={thumb} />
+            </Thumbnail>
+        </Link>
+    );
 };
 
 const PostItem = (props) => {
-  const { post } = props;
-  const title = RichText.asText(post.data?.title);
+    const { post } = props;
+    const title = RichText.asText(post.data?.title);
 
-  return (
-    <Link to={linkResolver(post)}>
-      <h2>{title}</h2>
-    </Link>
-  );
+    return (
+        <Link to={linkResolver(post)}>
+            <h2>{title}</h2>
+        </Link>
+    );
 };
 
 const BlogPosts = (props) => {
-  const { posts } = props;
+    const { posts } = props;
 
-  return (
-    <>
-      {posts.map((post) => (
-        <PostItem post={post} key={post.id} />
-      ))}
-    </>
-  );
+    return (
+        <>
+            {posts.map((post) => (
+                <PostItem post={post} key={post.id} />
+            ))}
+        </>
+    );
 };
 
 const Posters = (props) => {
-  const { posters } = props;
+    const { posters } = props;
 
-  return (
-    <>
-      {posters.map((poster) => (
-        <PosterItem poster={poster} key={poster.id} />
-      ))}
-    </>
-  );
+    return (
+        <>
+            {posters.map((poster) => (
+                <PosterItem poster={poster} key={poster.id} />
+            ))}
+        </>
+    );
 };
 
 const Home = () => {
-  const [prismicData, setPrismicData] = useState({ homeDoc: null, posters: null, blog_posts: null });
-  const [notFound, toggleNotFound] = useState(false);
+    const [prismicData, setPrismicData] = useState({ homeDoc: null, posters: null, blog_posts: null });
+    const [notFound, toggleNotFound] = useState(false);
 
-  // Get the homepage and blog post documents from Prismic
-  useEffect(() => {
-    const fetchPrismicData = async () => {
-      try {
-        const homeDoc = await client.getSingle('page');
-        const blog_posts = await client.query(
-          Prismic.Predicates.at('document.type', 'blog_post'),
-          { orderings: '[my.post.date desc]' }
+    // Get the homepage and blog post documents from Prismic
+    useEffect(() => {
+        const fetchPrismicData = async () => {
+            try {
+                const homeDoc = await client.getSingle('page');
+                const blogPosts = await client.query(
+                    Prismic.Predicates.at('document.type', 'blog_post'),
+                    { orderings: '[my.post.date desc]' }
+                );
+                const posters = await client.query(
+                    Prismic.Predicates.at('document.type', 'poster'),
+                    { orderings: '[my.post.date desc]' }
+                );
+
+                if (homeDoc) {
+                    setPrismicData({ homeDoc, posters: posters.results, blog_posts: blogPosts.results });
+                } else {
+                    console.warn('Blog Home document was not found. Make sure it exists in your Prismic repository');
+                    toggleNotFound(true);
+                }
+            } catch (error) {
+                console.error(error);
+                toggleNotFound(true);
+            }
+        };
+
+        fetchPrismicData();
+    }, []);
+
+    // Return the page if a document was retrieved from Prismic
+    if (prismicData.homeDoc) {
+        const homeDoc = prismicData.homeDoc;
+        const blogPosts = prismicData.blog_posts;
+        const posters = prismicData.posters;
+        const title = RichText.asText(homeDoc.data.title);
+
+        return (
+            <DefaultLayout seoTitle={title}>
+                {title}
+                <Posters posters={posters} />
+                <BlogPosts posts={blogPosts} />
+            </DefaultLayout>
         );
-        const posters = await client.query(
-          Prismic.Predicates.at('document.type', 'poster'),
-          { orderings: '[my.post.date desc]' }
-        );
-  
-        if (homeDoc) {
-          setPrismicData({ homeDoc, posters: posters.results, blog_posts: blog_posts.results });
-        } else {
-          console.warn('Blog Home document was not found. Make sure it exists in your Prismic repository');
-          toggleNotFound(true);
-        }
-      } catch (error) {
-        console.error(error);
-        toggleNotFound(true);
-      }
+    } else if (notFound) {
+        return <NotFound />;
     }
-
-    fetchPrismicData();
-  }, []);
-
-  // Return the page if a document was retrieved from Prismic
-  if (prismicData.homeDoc) {
-    const homeDoc = prismicData.homeDoc;
-    const blog_posts = prismicData.blog_posts;
-    const posters = prismicData.posters;
-    const title = RichText.asText(homeDoc.data.title);
-
-    return (
-      <DefaultLayout seoTitle={title}>
-        {title}
-        <Posters posters={posters} />
-        <BlogPosts posts={blog_posts} />
-      </DefaultLayout>
-    );
-  } else if (notFound) {
-    return <NotFound />;
-  }
-  return null;
-}
+    return null;
+};
 
 export default Home;

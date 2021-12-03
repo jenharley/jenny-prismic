@@ -1,7 +1,8 @@
-import { Typography } from "../Typography";
+import React from 'react';
+import { Typography } from '../Typography';
 import { respondTo } from '../../utils/StyleUtil';
 import Link from '@mui/material/Link';
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const LighthouseImage = styled.img`
     max-width: 100%;
@@ -33,13 +34,13 @@ const Info = (props) => {
             <Typography variant="bodyMedium">{description}</Typography>
             <Link
                 href={`http://en.wikipedia.org/w/index.php?title=Special:Search&search=${name}`}
-                target="_new" 
+                target="_new"
                 underline="hover"
             >
                 Learn more
             </Link>
         </StyledInfo>
     );
-}
+};
 
 export default Info;

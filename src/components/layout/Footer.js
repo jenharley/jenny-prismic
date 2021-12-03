@@ -4,9 +4,9 @@ import React from 'react';
  * Site footer component
  */
 const Footer = () => (
-  <footer>
+    <footer>
     &copy; 2022 Jen Harley
-  </footer>
+    </footer>
 );
 
 export default Footer;

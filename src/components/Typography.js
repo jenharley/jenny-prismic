@@ -8,13 +8,13 @@ const FONT_SIZES = {
     small: 16,
     xsmall: 14,
     micro: 12,
-    nano: 10,
+    nano: 10
 };
 
 const FONT_WEIGHTS = {
     normal: 400,
     semiBold: 500,
-    bold: 600,
+    bold: 600
 };
 
 const LINE_HEIGHTS = {
@@ -22,7 +22,7 @@ const LINE_HEIGHTS = {
     small: 1.2,
     medium: 1.3,
     large: 1.4,
-    xlarge: 1.55,
+    xlarge: 1.55
 };
 
 const StyledTypography = styled.div`
