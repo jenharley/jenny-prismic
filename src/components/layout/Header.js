@@ -61,6 +61,7 @@ const StyledLink = styled(NavLink)`
     text-align: center;
     text-decoration: none;
     text-transform: uppercase;
+    white-space: nowrap;
 
     ${respondTo('tablet')`
         text-align: left;
