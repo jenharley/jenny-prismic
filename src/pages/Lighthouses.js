@@ -14,8 +14,10 @@ import { client } from '../utils/prismicHelpers';
 import styled, { css } from 'styled-components';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import Modal from '@mui/material/Modal';
+import Dialog from '@mui/material/Dialog';
 import MaxWidthContainer from '../components/MaxWidthContainer';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 
 // eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
 mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
@@ -101,21 +103,8 @@ const LighthouseGrid = styled.div`
 `;
 
 const ModalInner = styled.div`
-    background: #fff;
-    border-radius: 10px;
-    display: grid;
-    left: 50%;
-    max-height: 100vh;
-    max-width: 480px;
-    overflow-y: auto;
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-
     img {
         display: block;
-        border-radius: 0 0 10px 10px;
 
         ${respondTo('laptop', 'max', 'height')`
             grid-column: 2;
@@ -124,13 +113,9 @@ const ModalInner = styled.div`
     }
 
     ${respondTo('desktop')`
-        max-width: 580px;
     `}
 
     ${respondTo('laptop', 'max', 'height')`
-        grid-template-columns: 1fr 400px;
-        grid-template-rows: 1fr 200px;
-        max-width: 880px;
     `}
 `;
 
@@ -186,6 +171,8 @@ const Lighthouses = () => {
         width: "fit",
         zoom: 6
     });
+    const theme = useTheme();
+    const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
     useEffect(() => {
         const fetchPrismicData = async () => {
@@ -277,18 +264,17 @@ const Lighthouses = () => {
                             </LighthouseGrid>
                         </MaxWidthContainer>
                     }
-                    <Modal
+                    <Dialog
+                        fullScreen={fullScreen}
                         open={open}
                         onClose={handleClose}
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
                     >
                         <>
                             {!!modalData &&
                                 <Content lighthouse={modalData} />
                             }
                         </>
-                    </Modal>
+                    </Dialog>
                 </DefaultLayout>
             </>
         );
@@ -303,14 +289,14 @@ const Content = (props) => {
     const [viewport, setViewport] = React.useState({
         longitude: lighthouse.geometry.coordinates[0],
         latitude: lighthouse.geometry.coordinates[1],
-        zoom: 12
+        zoom: 8
     });
 
     return (
         <ModalInner>
             <ModalName>{lighthouse.properties.name}</ModalName>
             <ModalMap>
-                <ReactMapGl mapboxApiAccessToken={mapboxToken} mapStyle="mapbox://styles/mapbox/dark-v10" height="300px" width="100%" {...viewport} onViewportChange={setViewport}>
+                <ReactMapGl scrollZoom={false} mapboxApiAccessToken={mapboxToken} mapStyle="mapbox://styles/mapbox/dark-v10" height="150px" width="100%" {...viewport} onViewportChange={setViewport}>
                     <Marker longitude={lighthouse.geometry.coordinates[0]} latitude={lighthouse.geometry.coordinates[1]}>
                         <svg height={SIZE}
                             viewBox="0 0 24 24"
