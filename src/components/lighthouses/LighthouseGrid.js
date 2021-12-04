@@ -50,7 +50,6 @@ const Title = styled.h1`
     `}
 `;
 
-
 const LighthouseGrid = (props) => {
     const { lighthouses } = props;
     const [modalData, setModalData] = useState(null);
