@@ -16,6 +16,7 @@ const Close = styled.div`
 const Lighthouse = styled.img`
     display: block;
     max-width: 100%;
+    min-width: 320px;
 `;
 
 const ModalInner = styled.div`
@@ -64,7 +65,7 @@ const LighthousePopup = (props) => {
                 </Close>
                 <ModalName>{lighthouse.properties.name}</ModalName>
                 <ModalMap>
-                    <ReactMapGl scrollZoom={false} mapboxApiAccessToken={mapboxToken} mapStyle="mapbox://styles/mapbox/dark-v10" height="150px" width="100%" {...viewport} onViewportChange={setViewport}>
+                    <ReactMapGl scrollZoom={false} mapboxApiAccessToken={mapboxToken} mapStyle="mapbox://styles/mapbox/dark-v10" height="150px" width="442px" {...viewport} onViewportChange={setViewport}>
                         <Marker longitude={lighthouse.geometry.coordinates[0]} latitude={lighthouse.geometry.coordinates[1]}>
                             <svg height={SIZE}
                                 viewBox="0 0 24 24"
