@@ -32,6 +32,25 @@ const Grid = styled.div`
     }
 `;
 
+const Title = styled.h1`
+    color: #41294a;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -.06em;
+    padding: 5em 0 2em;
+    text-align: center;
+
+    ${respondTo('tablet')`
+        font-size: 4rem;
+    `}
+
+    ${respondTo('desktop')`
+        font-size: 8rem;
+        padding: 2em 0 1em;
+    `}
+`;
+
+
 const LighthouseGrid = (props) => {
     const { lighthouses } = props;
     const [modalData, setModalData] = useState(null);
@@ -43,12 +62,13 @@ const LighthouseGrid = (props) => {
 
     return (
         <MaxWidthContainer>
+            <Title>Lighthouse Project</Title>
             <Grid>
                 {lighthouses.map(lighthouse => (<LighthouseGridItem lighthouse={lighthouse} onClick={handleOpen} key={lighthouse.geometry.coordinates[0]} />))}
             </Grid>
-            <Dialog fullScreen={fullScreen} open={open} onClose={handleClose} >
+            <Dialog fullScreen={fullScreen} open={open} onClose={handleClose}>
                 {!!modalData &&
-                    <LighthousePopup lighthouse={modalData} />
+                    <LighthousePopup lighthouse={modalData} onClick={handleClose} />
                 }
             </Dialog>
         </MaxWidthContainer>

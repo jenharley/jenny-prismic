@@ -16,10 +16,10 @@ const StyledInfo = styled.div`
     display: grid;
     padding: 10px;
     row-gap: 2rem;
-    width: 325px;
+    width: calc(100% - 20px);
 
-    ${respondTo('desktop')`
-        width: 525px;
+    ${respondTo('mobile')`
+        width: calc(100% - 80px);
     `}
 `;
 

@@ -1,9 +1,11 @@
 import React from 'react';
+import { respondTo } from '../../utils/StyleUtil';
 import styled, { css } from 'styled-components';
 
 const Button = styled.div`
     cursor: pointer;
-    padding: 0.5rem 1rem;
+    padding: 1rem 2rem;
+    text-align: center;
 
     ${props => props.isActive && css`
         background-color: #eee;
@@ -21,6 +23,10 @@ const Button = styled.div`
     &:last-child {
         border-radius: 0 4px 4px 0;
     }
+
+    ${respondTo('desktop')`
+        padding: 0.5rem 1rem;
+    `}
 `;
 
 const ViewOptions = styled.div`
@@ -29,10 +35,17 @@ const ViewOptions = styled.div`
     border-radius: 5px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    margin: 20px;
     position: absolute;
-    top: 160px;
-    left: 30px;
+    width: calc(100% - 40px);
     z-index: 1;
+
+    ${respondTo('tablet')`
+        max-width: 400px;
+        top: 160px;
+        left: 30px;
+        width: auto;
+    `}
 `;
 
 const LighthouseViewToggle = (props) => {

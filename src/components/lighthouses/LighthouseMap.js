@@ -1,44 +1,21 @@
 import CloseIcon from '@mui/icons-material/Close';
+import { makeStyles } from '@mui/styles';
 import IconButton from '@mui/material/IconButton';
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
 import Info from './Info';
 import Pins from './Pins';
 import React, { useState } from 'react';
 import ReactMapGl from 'react-map-gl';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { mapboxToken } from '../../pages/Lighthouses';
-import { respondTo } from '../../utils/StyleUtil';
+import { createTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const Container = styled.div`
     overflow: hidden;
     position: absolute;
     width: 100%;
-`;
-
-const Drawer = styled.div`
-    background: #fff;
-    height: calc(100vh - 110px);
-    overflow-y: auto;
-    padding: 2rem;
-    position: absolute;
-    right: 0;
-    top: 0;
-    transform: translateX(389px);
-    transition: transform 300ms ease-in;
-    width: 389px;
-    z-index: 3;
-
-    ${respondTo('desktop')`
-        transform: translateX(589px);
-        width: 589px;
-    `}
-
-    ${props => props.isOpen && css`
-        transform: translateX(0);
-
-        ${respondTo('desktop')`
-            transform: translateX(0);
-        `}
-    `}
 `;
 
 const LighthouseMap = (props) => {
@@ -52,6 +29,40 @@ const LighthouseMap = (props) => {
         width: 'fit',
         zoom: 6
     });
+    const [state, setState] = React.useState({
+        right: false
+    });
+
+    const theme = createTheme({
+        breakpoints: {
+            values: {
+                xs: 480,
+                sm: 600,
+                md: 900,
+                lg: 1200,
+                xl: 1536
+            }
+        }
+    });
+    const matches = useMediaQuery(theme.breakpoints.up('xs'));
+    const drawerWidth = matches ? 525 : 300;
+    const padding = matches ? 5 : 1;
+
+    const useStyles = makeStyles({
+        paper: {
+            background: 'white',
+            width: drawerWidth
+        }
+    });
+    const classes = useStyles();
+
+    const toggleDrawer = (anchor, open) => (event) => {
+        if (event.type === 'keydown' && ((event).key === 'Tab' || (event).key === 'Shift')) {
+            return;
+        }
+
+        setState({ ...state, [anchor]: open });
+    };
 
     return (
         <Container>
@@ -59,13 +70,21 @@ const LighthouseMap = (props) => {
                 <Pins data={lighthouses} onClick={setPopupInfo} />
             </ReactMapGl>
             <Drawer
-                isOpen={!!popupInfo}
-                onClose={setPopupInfo}
+                anchor="right"
+                open={!!popupInfo}
+                onClose={() => { toggleDrawer('right', false); setPopupInfo(); }}
+                sx={{
+                    width: drawerWidth,
+                    flexShrink: 0,
+                    '& .MuiDrawer-paper': { width: drawerWidth, boxSizing: 'border-box', padding: padding }
+                }}
             >
-                <IconButton aria-label="Close" onClick={() => setPopupInfo(null)}>
-                    <CloseIcon />
-                </IconButton>
-                {popupInfo && <Info info={popupInfo} />}
+                <Box className={classes.paper}>
+                    <IconButton aria-label="Close" onClick={() => setPopupInfo(null)}>
+                        <CloseIcon />
+                    </IconButton>
+                    {popupInfo && <Info info={popupInfo} />}
+                </Box>
             </Drawer>
         </Container>
     );
