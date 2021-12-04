@@ -30,6 +30,7 @@ const Contact = props => {
 
     const handleSubmit = e => {
         const data = { 'form-name': 'contact', name, email, message };
+        console.log(data)
 
         fetch('/', {
             method: 'POST',
@@ -42,16 +43,16 @@ const Contact = props => {
     };
 
     const handleChange = e => {
-        const { name, value } = e.target;
-        if (name === 'name') {
+        const { id, value } = e.target;
+        if (id === 'name') {
             return setName(value);
         }
 
-        if (name === 'email') {
+        if (id === 'email') {
             return setEmail(value);
         }
 
-        if (name === 'message') {
+        if (id === 'message') {
             return setMessage(value);
         }
     };
@@ -59,7 +60,7 @@ const Contact = props => {
     return (
         <DefaultLayout>
             <h2>Contact</h2>
-            <Form onSubmit={handleSubmit} data-netlify="true">
+            <Form onSubmit={handleSubmit} data-netlify="true" data-netlify-recaptcha="true">
                 <TextField
                     autoComplete="name"
                     id="name"
@@ -83,6 +84,7 @@ const Contact = props => {
                     required
                     rows={4}
                 />
+                <div data-netlify-recaptcha="true"></div>
                 <Button
                     disableElevation
                     endIcon={<SendIcon />}
