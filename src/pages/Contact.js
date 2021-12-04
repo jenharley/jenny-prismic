@@ -59,7 +59,7 @@ const Contact = props => {
     return (
         <DefaultLayout>
             <h2>Contact</h2>
-            <Form onSubmit={handleSubmit} action="/thank-you" data-netlify="true" data-netlify-recaptcha="true">
+            <Form onSubmit={handleSubmit}>
                 <TextField
                     autoComplete="name"
                     id="name"
