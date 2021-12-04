@@ -59,7 +59,7 @@ const Contact = props => {
     return (
         <DefaultLayout>
             <h2>Contact</h2>
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit} data-netlify="true">
                 <TextField
                     autoComplete="name"
                     id="name"
