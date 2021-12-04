@@ -30,7 +30,6 @@ const Contact = props => {
 
     const handleSubmit = e => {
         const data = { 'form-name': 'contact', name, email, message };
-        console.log(data)
 
         fetch('/', {
             method: 'POST',
