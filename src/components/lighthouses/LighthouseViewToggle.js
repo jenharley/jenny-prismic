@@ -23,10 +23,6 @@ const Button = styled.div`
     &:last-child {
         border-radius: 0 4px 4px 0;
     }
-
-    ${respondTo('desktop')`
-        padding: 0.5rem 1rem;
-    `}
 `;
 
 const ViewOptions = styled.div`
