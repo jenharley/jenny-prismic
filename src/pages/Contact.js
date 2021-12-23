@@ -16,7 +16,7 @@ const Contact = props => {
     return (
         <DefaultLayout>
             <h2>Contact</h2>
-            <Form name="contact" method="POST" netlify data-netlify-recaptcha="true" netlify-honeypot="bot-field">
+            <Form name="contact" method="POST" data-netlify="true" data-netlify-recaptcha="true" netlify-honeypot="bot-field">
                 <TextField
                     autoComplete="name"
                     id="name"
