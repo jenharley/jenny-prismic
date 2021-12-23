@@ -1,5 +1,5 @@
 import Button from '@mui/material/Button';
-import React, { useState } from 'react';
+import React from 'react';
 import SendIcon from '@mui/icons-material/Send';
 import TextField from '@mui/material/TextField';
 import styled from 'styled-components';
@@ -13,65 +13,20 @@ const Form = styled.form`
 `;
 
 const Contact = props => {
-    const [name, setName] = useState('');
-    const [status, setStatus] = useState('');
-    const [email, setEmail] = useState('');
-    const [message, setMessage] = useState('');
-
-    const encode = (data) => {
-        const formData = new FormData();
-
-        Object.keys(data).forEach((k) => {
-            formData.append(k, data[k]);
-        });
-
-        return formData;
-    };
-
-    const handleSubmit = e => {
-        const data = { 'form-name': 'contact', name, email, message };
-
-        fetch('/', {
-            method: 'POST',
-            body: encode(data)
-        })
-            .then(() => setStatus('Sent'))
-            .catch(() => setStatus('Error sending, please try again.'));
-
-        e.preventDefault();
-    };
-
-    const handleChange = e => {
-        const { id, value } = e.target;
-        if (id === 'name') {
-            return setName(value);
-        }
-
-        if (id === 'email') {
-            return setEmail(value);
-        }
-
-        if (id === 'message') {
-            return setMessage(value);
-        }
-    };
-
     return (
         <DefaultLayout>
             <h2>Contact</h2>
-            <Form onSubmit={handleSubmit} data-netlify="true" data-netlify-recaptcha="true">
+            <Form method="POST" data-netlify="true" data-netlify-recaptcha="true" name="contact">
                 <TextField
                     autoComplete="name"
                     id="name"
                     label="Name"
-                    onChange={handleChange}
                     required
                 />
                 <TextField
                     autoComplete="email"
                     id="email"
                     label="Email"
-                    onChange={handleChange}
                     required
                     type="email"
                 />
@@ -79,11 +34,9 @@ const Contact = props => {
                     id="message"
                     label="Message"
                     multiline
-                    onChange={handleChange}
                     required
                     rows={4}
                 />
-                <div data-netlify-recaptcha="true"></div>
                 <Button
                     disableElevation
                     endIcon={<SendIcon />}
@@ -94,7 +47,6 @@ const Contact = props => {
                     Send
                 </Button>
             </Form>
-            <h3>{status}</h3>
         </DefaultLayout>
     );
 };
