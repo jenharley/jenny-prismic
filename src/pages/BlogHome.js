@@ -12,7 +12,7 @@ import { isMobileWidth, respondTo } from '../utils/StyleUtil';
 import { linkResolver } from '../prismic-configuration';
 import MaxWidthContainer from '../components/MaxWidthContainer';
 
-const BlogTitle = styled.h1`
+export const Title = styled.h1`
     color: #41294a;
     font-size: 4rem;
     font-weight: 700;
@@ -42,6 +42,10 @@ const Dateline = styled.div`
     justify-content: space-between;
     margin-top: 1rem;
     width: 100%;
+`;
+
+const Image = styled.img`
+    aspect-ratio: 1/1;
 `;
 
 const ReadMore = styled(Link)`
@@ -116,7 +120,7 @@ const PostItem = (props) => {
 
     return (
         <Post to={linkResolver(post)}>
-            {thumbnail.url && <img src={thumbnail.url} alt={title} />}
+            {thumbnail.url && <Image src={thumbnail.url} alt={title} />}
             <h2>{blog_title}</h2>
             <p>{truncate(description)}</p>
             <Dateline>
@@ -148,7 +152,7 @@ const BlogPosts = (props) => {
             <Masonry
                 columns={columns}
                 spacing={5}
-                defaultHeight={516}
+                defaultHeight={2545}
                 defaultColumns={3}
                 defaultSpacing={5}
             >
@@ -205,9 +209,9 @@ const BlogHome = () => {
         const blog_posts = prismicData.blog_posts;
 
         return (
-            <DefaultLayout seoTitle={'Blog'}>
+            <DefaultLayout seoTitle={'Blog | Jen Harley'}>
                 <MaxWidthContainer>
-                    <BlogTitle>Blog Posts</BlogTitle>
+                    <Title>Blog Posts</Title>
                 </MaxWidthContainer>
                 <BlogPosts posts={blog_posts} />
             </DefaultLayout>

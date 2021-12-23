@@ -5,10 +5,13 @@ import Link from '@mui/material/Link';
 import styled from 'styled-components';
 
 const LighthouseImage = styled.img`
-    max-width: 100%;
+    background: #eee;
+    height: 260px;
+    width: 260px;
 
-    ${respondTo('desktop')`
-        max-width: 400px;
+    ${respondTo('mobile')`
+        height: 425px;
+        width: 425px;
     `}
 `;
 

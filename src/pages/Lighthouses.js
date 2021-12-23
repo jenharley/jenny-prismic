@@ -46,7 +46,7 @@ const Lighthouses = () => {
     if (prismicData.lighthouses) {
         return (
             <>
-                <DefaultLayout seoTitle="Lighthouse Project" hideFooter={!showGrid}>
+                <DefaultLayout seoTitle="Lighthouse Project | Jen Harley" hideFooter={!showGrid}>
                     <LighthouseViewToggle onClick={setShowGrid} showGrid={showGrid} />
                     {!showGrid &&
                         <LighthouseMap lighthouses={prismicData.lighthouses} />
