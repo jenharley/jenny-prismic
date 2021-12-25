@@ -21,7 +21,7 @@ const Contact = props => {
                 Contact
             </Title>
             <Form
-                name='reCAPTCHA'
+                name='contact'
                 action='/thanks'
                 honeypotName='bot-field'
                 enableRecaptcha
@@ -46,28 +46,19 @@ const Contact = props => {
                             </p>
                         )}
                         <div>
-                            <label htmlFor='name' sx={{ variant: 'forms.label' }}>
-                                Name:
-                            </label>
                             <TextField
-                                type='text'
-                                name='name'
-                                id='name'
-                                onChange={handleChange}
-                                sx={{ variant: 'forms.input' }}
+                                id="name"
+                                label="Name"
+                                required
                             />
                         </div>
                         <div sx={{ pt: 2 }}>
-                            <label htmlFor='message' sx={{ variant: 'forms.label' }}>
-                                Message:
-                            </label>
                             <TextField
-                                type='text'
-                                name='message'
-                                id='message'
-                                rows='4'
-                                onChange={handleChange}
-                                sx={{ variant: 'forms.textarea' }}
+                                id="message"
+                                label="Message"
+                                multiline
+                                required
+                                rows={4}
                             />
                         </div>
                         <div sx={{ pt: 3 }}>
