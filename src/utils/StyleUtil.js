@@ -3,7 +3,7 @@ import { flatten, zip } from 'lodash';
 export const BREAKPOINTS = {
     mobile: 480,
     mobileVertical: 760,
-    tablet: 860,
+    tablet: 900,
     laptop: 1154,
     desktop: 1472,
     widescreen: 2000
