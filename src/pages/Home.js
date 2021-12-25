@@ -17,7 +17,7 @@ const PosterThumbnail = props => {
 };
 
 const Thumbnail = styled.div`
-  max-width: 200px;
+    max-width: 200px;
 `;
 
 const PosterItem = (props) => {
@@ -112,7 +112,6 @@ const Home = () => {
 
         return (
             <DefaultLayout seoTitle={title}>
-                {title}
                 <Posters posters={posters} />
                 <BlogPosts posts={blogPosts} />
             </DefaultLayout>

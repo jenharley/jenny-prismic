@@ -152,12 +152,12 @@ const Header = () => {
                         <li>
                             <StyledLink to="/blog"><span>Blog</span></StyledLink>
                         </li>
-                        <li>
+                        {/* <li>
                             <StyledLink to="/shop"><span>Shop</span></StyledLink>
-                        </li>
-                        <li>
+                        </li> */}
+                        {/* <li>
                             <StyledLink to="/about"><span>About</span></StyledLink>
-                        </li>
+                        </li> */}
                         <li>
                             <StyledLink to="/contact"><span>Contact</span></StyledLink>
                         </li>
