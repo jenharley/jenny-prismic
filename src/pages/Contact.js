@@ -52,6 +52,7 @@ const Contact = props => {
                                 <TextField
                                     id="name"
                                     label="Name"
+                                    name="name"
                                     required
                                     onChange={handleChange}
                                     sx={{ width: '100%' }}
@@ -61,6 +62,7 @@ const Contact = props => {
                                 <TextField
                                     id="email"
                                     label="Email"
+                                    name="email"
                                     type="email"
                                     required
                                     onChange={handleChange}
@@ -71,6 +73,7 @@ const Contact = props => {
                                 <TextField
                                     id="message"
                                     label="Message"
+                                    name="message"
                                     multiline
                                     required
                                     onChange={handleChange}
