@@ -5,7 +5,7 @@ import { DefaultLayout, SliceZone } from '../components';
 import NotFound from './NotFound';
 import { client } from '../utils/prismicHelpers';
 import { useParams } from 'react-router-dom';
-import MaxWidthContainer from '../components/MaxWidthContainer';
+import { MaxWidthContainer } from '../components/MaxWidthContainer';
 import { Typography } from '../components/Typography';
 
 /**
@@ -47,7 +47,7 @@ const Post = () => {
 
         return (
             <DefaultLayout seoTitle={title}>
-                <MaxWidthContainer>
+                <MaxWidthContainer max={800}>
                     <Typography variant="h1" as="h1">{title}</Typography>
                     <SliceZone sliceZone={prismicDoc.data.body} />
                 </MaxWidthContainer>

@@ -7,7 +7,7 @@ import { client } from '../utils/prismicHelpers';
 import { useParams } from 'react-router-dom';
 import { Grid } from '@mui/material';
 import styled from 'styled-components';
-import MaxWidthContainer from '../components/MaxWidthContainer';
+import { MaxWidthContainer } from '../components/MaxWidthContainer';
 import moment from 'moment';
 
 const PosterContainer = styled.div`

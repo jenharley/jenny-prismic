@@ -8,7 +8,7 @@ import { client } from '../utils/prismicHelpers';
 import { Link } from 'react-router-dom';
 import { linkResolver } from '../prismic-configuration';
 import { respondTo } from '../utils/StyleUtil';
-import MaxWidthContainer from '../components/MaxWidthContainer';
+import { MaxWidthContainer } from '../components/MaxWidthContainer';
 import { Title } from './BlogHome';
 
 const ThumbnailTitle = styled.div`

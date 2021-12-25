@@ -1,7 +1,7 @@
 import Dialog from '@mui/material/Dialog';
 import LighthouseGridItem from './LighthouseGridItem';
 import LighthousePopup from './LighthousePopup';
-import MaxWidthContainer from '../MaxWidthContainer';
+import { MaxWidthContainer } from '../MaxWidthContainer';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import useMediaQuery from '@mui/material/useMediaQuery';

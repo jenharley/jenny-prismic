@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { linkResolver } from '../prismic-configuration';
 import { PosterItem } from './Posters';
 import { respondTo } from '../utils/StyleUtil';
-import MaxWidthContainer from '../components/MaxWidthContainer';
+import { MaxWidthContainer } from '../components/MaxWidthContainer';
 import { Button } from '../components/button';
 import { Grid } from '@mui/material';
 import moment from 'moment';

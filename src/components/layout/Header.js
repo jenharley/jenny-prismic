@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import Hamburger from '../Hamburger';
 import { isMobileWidth, respondTo } from '../../utils/StyleUtil';
-import MaxWidthContainer from '../MaxWidthContainer';
+import { MaxWidthContainer } from '../MaxWidthContainer';
 
 const HeaderContainer = styled(MaxWidthContainer)`
     ${respondTo('tablet')`
@@ -15,6 +15,7 @@ const HeaderContainer = styled(MaxWidthContainer)`
 const Nav = styled.nav`
     ${respondTo('tablet')`
         display: flex;
+        margin-left: auto;
     `}
 `;
 
@@ -43,6 +44,7 @@ const NavList = styled.ul`
         z-index: 1;
     `}
 `;
+
 const StyledHeader = styled.header`
     display: grid;
     width: 100%;

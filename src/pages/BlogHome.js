@@ -10,7 +10,7 @@ import { RichText } from 'prismic-reactjs';
 import { client } from '../utils/prismicHelpers';
 import { isMobileWidth, respondTo } from '../utils/StyleUtil';
 import { linkResolver } from '../prismic-configuration';
-import MaxWidthContainer from '../components/MaxWidthContainer';
+import { MaxWidthContainer } from '../components/MaxWidthContainer';
 
 export const Title = styled.h1`
     color: #41294a;
