@@ -25,7 +25,7 @@ export const Title = styled.h1`
     `}
 `;
 
-const Date = styled.span`
+export const Date = styled.span`
     color: #ff2c54;
     font-size: 0.75rem;
     font-weight: 700;
@@ -34,7 +34,7 @@ const Date = styled.span`
     white-space: nowrap;
 `;
 
-const Dateline = styled.div`
+export const Dateline = styled.div`
     align-items: baseline;
     column-gap: 0.5rem;
     display: grid;
@@ -48,7 +48,7 @@ const Image = styled.img`
     aspect-ratio: 1/1;
 `;
 
-const ReadMore = styled(Link)`
+export const ReadMore = styled(Link)`
     color: #ff2c54;
     font-size: 0.75rem;
     font-weight: 700;
@@ -82,13 +82,6 @@ const Post = styled(Link)`
     }
 `;
 
-const PostList = styled.ul`
-    display: grid;
-    margin: 0 auto;
-    max-width: 1320px;
-    padding-left: 40px;
-`;
-
 const StyledTagList = styled.div`
     span {
         color: #bababa;
@@ -103,7 +96,7 @@ const StyledTagList = styled.div`
     }
 `;
 
-const truncate = (string, useLength) => {
+export const truncate = (string, useLength) => {
     const LENGTH = 155;
     const length = useLength || LENGTH;
 
@@ -148,7 +141,7 @@ const BlogPosts = (props) => {
     };
 
     return (
-        <PostList>
+        <MaxWidthContainer>
             <Masonry
                 columns={columns}
                 spacing={5}
@@ -160,11 +153,11 @@ const BlogPosts = (props) => {
                     <PostItem post={post} key={post.id} />
                 ))}
             </Masonry>
-        </PostList>
+        </MaxWidthContainer>
     );
 };
 
-const TagList = (props) => {
+export const TagList = (props) => {
     const { tags } = props;
     const array = tags.map(tag => tag.tag);
     const tagList = array.join(', ').toString();

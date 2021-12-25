@@ -61,7 +61,7 @@ const Poster = ({ match }) => {
             <DefaultLayout wrapperClass="main" seoTitle={title}>
                 <MaxWidthContainer>
                     <Grid container spacing={{ xs: 3, md: 4 }}>
-                        <Grid container item xs={12} md={6} sx={{ display: { md: 'none' } }}>
+                        <Grid container item xs={12} sx={{ display: { md: 'none' } }}>
                             <Grid container spacing={2}>
                                 <Grid item xs={12}>
                                     <Title>{title}</Title>
@@ -78,10 +78,10 @@ const Poster = ({ match }) => {
                         </Grid>
                         <Grid container item xs={12} md={3} sx={{ display: { xs: 'none', md: 'block' } }}>
                             <Grid container spacing={2}>
-                                <Grid item>
+                                <Grid item xs={12}>
                                     <Title>{title}</Title>
                                 </Grid>
-                                <Grid item>
+                                <Grid item xs={12}>
                                     <Date>{date}</Date>
                                 </Grid>
                             </Grid>

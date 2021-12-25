@@ -12,7 +12,7 @@ import MaxWidthContainer from '../components/MaxWidthContainer';
 import { Title } from './BlogHome';
 
 const ThumbnailTitle = styled.div`
-align-self: center;
+    align-self: center;
     background-color: rgba(65,41,74,.8);
     bottom: 0;
     color: #fff;
@@ -71,7 +71,7 @@ const PosterThumbnail = props => {
     );
 };
 
-const PosterItem = (props) => {
+export const PosterItem = (props) => {
     const { poster } = props;
     const title = RichText.asText(poster.data?.title);
     const thumb = poster.data.square;
