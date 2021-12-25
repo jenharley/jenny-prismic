@@ -9,6 +9,8 @@ const Container = styled.div`
     width: 100%;
 
     ${props => props.max && css`
+        margin-left: auto;
+        margin-right: auto;
         max-width: ${props.max}px;
     `}
 

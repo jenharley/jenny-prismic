@@ -38,15 +38,19 @@ const Contact = props => {
                             <Honeypot />
                             <Recaptcha siteKey={'6LegXXcdAAAAACtakT-rVDrxVVTHKRhs9mE4jHKE'} invisible />
                             {success && (
-                                <p sx={{ variant: 'alerts.success', p: 3 }}>
-                                Thanks for contacting us!
-                                </p>
+                                <Grid item xs={12}>
+                                    <p sx={{ variant: 'alerts.success', p: 3 }}>
+                                        Thanks for contacting us!
+                                    </p>
+                                </Grid>
                             )}
                             {error && (
-                                <p sx={{ variant: 'alerts.muted', p: 3 }}>
-                                Sorry, we could not reach servers. Because it only works on Netlify,
-                                our GitHub demo does not provide a response.
-                                </p>
+                                <Grid item xs={12}>
+                                    <p sx={{ variant: 'alerts.muted', p: 3 }}>
+                                    Sorry, we could not reach servers. Because it only works on Netlify,
+                                    our GitHub demo does not provide a response.
+                                    </p>
+                                </Grid>
                             )}
                             <Grid item xs={12}>
                                 <TextField
