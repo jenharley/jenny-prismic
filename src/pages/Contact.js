@@ -53,6 +53,7 @@ const Contact = props => {
                                     id="name"
                                     label="Name"
                                     required
+                                    onChange={handleChange}
                                     sx={{ width: '100%' }}
                                 />
                             </Grid>
@@ -62,6 +63,7 @@ const Contact = props => {
                                     label="Email"
                                     type="email"
                                     required
+                                    onChange={handleChange}
                                     sx={{ width: '100%' }}
                                 />
                             </Grid>
@@ -71,6 +73,7 @@ const Contact = props => {
                                     label="Message"
                                     multiline
                                     required
+                                    onChange={handleChange}
                                     rows={4}
                                     sx={{ width: '100%' }}
                                 />
