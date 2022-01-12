@@ -110,7 +110,7 @@ const PosterGallery = () => {
             try {
                 const posters = await client.query(
                     Prismic.Predicates.at('document.type', 'poster'),
-                    { orderings: '[my.post.date desc]' }
+                    { orderings: '[my.post.date desc]', pageSize: 100 }
                 );
 
                 if (posters) {
