@@ -104,11 +104,6 @@ const PosterGrid = styled.div`
     ${respondTo('tablet')`
         grid-template-columns: 1fr 2.1fr 1fr;
         grid-template-rows: repeat(2, 1fr);
-
-        a:nth-child(3) {
-            grid-column: 2;
-            grid-row: 1 / span 2;
-        }
     `}
 `;
 
@@ -118,7 +113,7 @@ const FeaturedPosters = (props) => {
     return (
         <PosterGrid>
             {posters.map((poster) => (
-                <PosterItem poster={poster} key={poster.id} />
+                <PosterItem poster={poster} key={poster.id} featured={true} />
             ))}
         </PosterGrid>
     );

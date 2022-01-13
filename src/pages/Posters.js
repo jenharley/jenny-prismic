@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { RichText } from 'prismic-reactjs';
 import Prismic from '@prismicio/client';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { DefaultLayout } from '../components';
 import NotFound from './NotFound';
 import { client } from '../utils/prismicHelpers';
@@ -71,18 +71,27 @@ const PosterThumbnail = props => {
     );
 };
 
+const StyledPosterLink = styled(Link)`
+    ${props => props.bigFeatured && props.featured && css`
+        grid-column: 2;
+        grid-row: 1 / span 2;
+    `}
+`;
+
 export const PosterItem = (props) => {
-    const { poster } = props;
+    console.log(props.poster);
+    const { featured, poster } = props;
     const title = RichText.asText(poster.data?.title);
     const thumb = poster.data.square;
+    const bigFeatured = poster.tags.includes('big');
 
     return (
-        <Link to={linkResolver(poster)}>
+        <StyledPosterLink to={linkResolver(poster)} bigFeatured={bigFeatured} featured={featured}>
             <Thumbnail>
                 <PosterThumbnail thumb={thumb} />
                 <ThumbnailTitle>{title}</ThumbnailTitle>
             </Thumbnail>
-        </Link>
+        </StyledPosterLink>
     );
 };
 
