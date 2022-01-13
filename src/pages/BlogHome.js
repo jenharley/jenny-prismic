@@ -48,7 +48,7 @@ const Image = styled.img`
     aspect-ratio: 1/1;
 `;
 
-export const ReadMore = styled(Link)`
+export const ReadMore = styled.span`
     color: #ff2c54;
     font-size: 0.75rem;
     font-weight: 700;
@@ -119,7 +119,7 @@ const PostItem = (props) => {
             <Dateline>
                 <Date>{date}</Date>
                 {tags && <TagList tags={tags} />}
-                <ReadMore to={linkResolver(post)}>Read More</ReadMore>
+                <ReadMore>Read More</ReadMore>
             </Dateline>
         </Post>
     );

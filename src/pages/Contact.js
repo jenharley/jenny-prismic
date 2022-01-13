@@ -29,7 +29,6 @@ const Contact = props => {
                     honeypotName='bot-field'
                     enableRecaptcha
                     onSuccess={(response, context) => {
-                        console.log('Successfully sent form data to Netlify Server');
                         context.formRef.current.reset();
                     }}
                 >
